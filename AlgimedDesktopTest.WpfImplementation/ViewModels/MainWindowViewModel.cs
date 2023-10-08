@@ -1,37 +1,39 @@
-﻿using AlgimedDesktopTest.WpfImplementation.Utils;
+﻿using AlgimedDesktopTest.WpfImplementation.Services.Interfaces;
+using AlgimedDesktopTest.WpfImplementation.Utils;
 using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Regions;
-using System;
 
 namespace AlgimedDesktopTest.WpfImplementation.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private string _title = "Main Window";
+        private readonly IStartPageOptionService _startPageOptionService;
+        private string _title = "Welcome";
         public string Title
         {
             get => _title;
             set => SetProperty(ref _title, value);
         }
 
-        public DelegateCommand<string> NavigateCommand { get; }
+        public DelegateCommand WindowLoadedCommand { get; }
 
-        public MainWindowViewModel(IRegionManager regionManager) : base(regionManager)
+        public MainWindowViewModel(
+            IRegionManager regionManager,
+            IEventAggregator eventAggregator,
+            IStartPageOptionService startPageOptionService) : base(regionManager, eventAggregator)
         {
-            NavigateCommand = new DelegateCommand<string>(NavigateCommandExecute);
+            _startPageOptionService = startPageOptionService;
+
+            WindowLoadedCommand = new DelegateCommand(WindowLoadedCommandExecute);
         }
 
-        private void NavigateCommandExecute(string navigationPath)
+        private void WindowLoadedCommandExecute()
         {
-            if (string.IsNullOrWhiteSpace(navigationPath))
-            {
-                throw new ArgumentException();
-            }
-            else
-            {
-                _regionManager.RequestNavigate(RegionNames.ContentRegion, navigationPath);
-            }
+            _navigation.RegionName = RegionNames.PageRegion;
+            _navigation.ViewName = _startPageOptionService.GetPageName();
+            Navigate();
         }
     }
 }
