@@ -11,6 +11,28 @@
              d:Width="700"
              d:Height="700">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Label DockPanel.Dock="Left"
+                   Margin="5"
+                   Content="Profile"/>
+            <Button DockPanel.Dock="Right"
+                    Margin="5"
+                    MaxWidth="100"
+                    HorizontalAlignment="Right"
+                    Content="Sign out"/>
+        </DockPanel>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Modes">
+                
+            </TabItem>
+            <TabItem Header="Steps">
+                
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

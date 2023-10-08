@@ -11,5 +11,5 @@ public class ModeEntity : IEntityBase<int>
     public int MaxBottleNumber { get; set; }
     public int MaxUsedTips { get; set; }
 
-    public virtual ICollection<string> Steps { get; set; } = new List<string>();
+    public virtual ICollection<StepEntity> Steps { get; set; } = new List<StepEntity>();
 }
