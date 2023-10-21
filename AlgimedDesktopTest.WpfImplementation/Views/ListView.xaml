@@ -2,37 +2,88 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:u="clr-namespace:AlgimedDesktopTest.WpfImplementation.Utils"
+             xmlns:m="clr-namespace:AlgimedDesktopTest.WpfImplementation.Models"
              xmlns:vm="clr-namespace:AlgimedDesktopTest.WpfImplementation.ViewModels"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:ListViewModel}"
              d:Width="700"
-             d:Height="700">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0">
-            <Label DockPanel.Dock="Left"
-                   Margin="5"
-                   Content="Profile"/>
-            <Button DockPanel.Dock="Right"
-                    Margin="5"
-                    MaxWidth="100"
-                    HorizontalAlignment="Right"
-                    Content="Sign out"/>
-        </DockPanel>
-        <TabControl Grid.Row="1">
-            <TabItem Header="Modes">
-                
-            </TabItem>
-            <TabItem Header="Steps">
-                
-            </TabItem>
-        </TabControl>
-    </Grid>
+             d:Height="700"
+             d:Background="DarkGray"
+             Background="DarkGray">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <prism:InvokeCommandAction Command="{Binding ListViewLoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <TabControl>
+        <TabItem Header="Modes">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Margin="5, 5, 1, 1" Width="100" Content="Add"
+                            Command="{Binding NavigateToModeCommand}"
+                            CommandParameter="{x:Static u:Consts.XamlAddKey}"/>
+                    <Button Margin="1, 5, 1, 1" Width="100" Content="Edit"
+                            Command="{Binding NavigateToModeCommand}"
+                            CommandParameter="{x:Static u:Consts.XamlEditKey}"/>
+                    <Button Margin="1, 5, 0, 1" Width="100" Content="Remove"
+                            Command="{Binding RemoveModeCommand}"/>
+                </StackPanel>
+                <ListView Grid.Row="1"
+                          Margin="5"
+                          SelectionMode="Single"
+                          Background="Gray"
+                          SelectedItem="{Binding SelectedMode}"
+                          ItemsSource="{Binding Modes}">
+                    <ListView.View>
+                        <GridView >
+                            <GridView.Columns>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Name: "/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:ModeModel">
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Bottles: "/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:ModeModel">
+                                            <TextBlock Text="{Binding MaxBottleNumber}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Tips: "/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:ModeModel">
+                                            <TextBlock Text="{Binding MaxUsedTips}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Steps">
+            <!--todo-->
+        </TabItem>
+    </TabControl>
 </UserControl>

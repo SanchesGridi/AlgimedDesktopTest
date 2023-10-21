@@ -1,4 +1,6 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
+using AlgimedDesktopTest.WpfImplementation.Mapper.Profiles;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Prism.Ioc;
 
@@ -6,14 +8,25 @@ namespace AlgimedDesktopTest.WpfImplementation.Extensions;
 
 public static class ContainerRegistryExtensions
 {
-    public static IContainerRegistry RegisterAppContext(this IContainerRegistry @this)
+    public static IContainerRegistry RegisterAutoMapperInstance(this IContainerRegistry @this)
     {
-        @this.RegisterScoped<AppContext>(() =>
+        @this.RegisterInstance(new MapperConfiguration(cfg =>
         {
-            var builder = new DbContextOptionsBuilder<AppContext>()
+            cfg.AddProfile<ModeProfile>();
+            cfg.AddProfile<StepProfile>();
+        }).CreateMapper());
+
+        return @this;
+    }
+
+    public static IContainerRegistry RegisterAppDbContext(this IContainerRegistry @this)
+    {
+        @this.Register<AppDbContext>(() =>
+        {
+            var builder = new DbContextOptionsBuilder<AppDbContext>()
                 .UseSqlite("Data Source=algimed_test_task.db")
                 .UseLazyLoadingProxies();
-            var context = new AppContext(builder.Options);
+            var context = new AppDbContext(builder.Options);
             return context;
         });
 

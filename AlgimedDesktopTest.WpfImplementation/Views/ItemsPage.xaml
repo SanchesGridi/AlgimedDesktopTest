@@ -10,7 +10,25 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:ItemsPageViewModel}"
              d:Width="700"
-             d:Height="700">
-    <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                    prism:RegionManager.RegionName="{x:Static utils:RegionNames.ContentRegion}"/>
+             d:Height="700"
+             d:Background="DarkGray"
+             Background="DarkGray">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Button DockPanel.Dock="Right"
+                    Margin="5" Padding="2.5"
+                    MaxWidth="100"
+                    HorizontalAlignment="Right"
+                    Content="Sign out"/>
+            <Label DockPanel.Dock="Right"
+                   Margin="5"
+                   HorizontalAlignment="Right"
+                   Content="Profile:"/>
+        </DockPanel>
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static utils:RegionNames.ContentRegion}"/>
+    </Grid>
 </UserControl>

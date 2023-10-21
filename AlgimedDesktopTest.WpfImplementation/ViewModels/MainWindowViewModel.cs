@@ -4,6 +4,7 @@ using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 
 namespace AlgimedDesktopTest.WpfImplementation.ViewModels
 {
@@ -22,7 +23,8 @@ namespace AlgimedDesktopTest.WpfImplementation.ViewModels
         public MainWindowViewModel(
             IRegionManager regionManager,
             IEventAggregator eventAggregator,
-            IStartPageOptionService startPageOptionService) : base(regionManager, eventAggregator)
+            IDialogService dialogService,
+            IStartPageOptionService startPageOptionService) : base(regionManager, eventAggregator, dialogService)
         {
             _startPageOptionService = startPageOptionService;
 

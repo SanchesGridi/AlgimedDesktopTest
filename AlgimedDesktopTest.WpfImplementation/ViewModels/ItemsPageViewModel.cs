@@ -1,19 +1,16 @@
-﻿using AlgimedDesktopTest.WpfImplementation.Utils;
-using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
-using Prism.Commands;
+﻿using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
 using Prism.Events;
-using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Prism.Services.Dialogs;
 
-namespace AlgimedDesktopTest.WpfImplementation.ViewModels
+namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
+
+public class ItemsPageViewModel : ViewModelBase
 {
-    public class ItemsPageViewModel : ViewModelBase
+    public ItemsPageViewModel(
+        IRegionManager regionManager,
+        IEventAggregator eventAggregator,
+        IDialogService dialogService) : base(regionManager, eventAggregator, dialogService)
     {
-        public ItemsPageViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
-        {
-        }
     }
 }

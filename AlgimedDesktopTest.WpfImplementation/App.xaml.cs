@@ -20,8 +20,12 @@ namespace AlgimedDesktopTest.WpfImplementation
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IStartPageOptionService, StartPageOptionService>();
-            containerRegistry.RegisterAppContext();
+            containerRegistry
+                .RegisterSingleton<IStartPageOptionService, StartPageOptionService>()
+                .RegisterAutoMapperInstance()
+                .RegisterAppDbContext();
+
+            containerRegistry.RegisterDialog<ExceptionDialog, ExceptionDialogViewModel>(Consts.Dialogs.ExceptionDialog);
 
             containerRegistry.RegisterForNavigation<MainWindow, MainWindowViewModel>();
             containerRegistry.RegisterForNavigation<RegistrationPage, RegistrationPageViewModel>();
