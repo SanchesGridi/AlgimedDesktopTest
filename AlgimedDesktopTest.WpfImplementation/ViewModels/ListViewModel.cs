@@ -145,10 +145,17 @@ public class ListViewModel : ViewModelBase
                 Destination = selected.Destination,
                 Speed = selected.Speed,
                 Type = selected.Type,
-                Volume = selected.Volume
+                Volume = selected.Volume,
+                ModeId = selected.ModeId
             };
 
-            NavigateToView(Consts.ViewNames.StepItemView, parameter, SelectedStep!, InternalMapper, () => new(NewItemId));
+            var parameters = new NavigationParameters
+            {
+                { Consts.Keys.IdsKey, Modes!.Select(x => x.GetId()).OrderBy(x => x).ToArray() }
+            };
+            NavigateToView(
+                Consts.ViewNames.StepItemView, parameter, SelectedStep!, InternalMapper, () => new(NewItemId), parameters
+            );
         }
         catch (Exception ex)
         {
@@ -169,7 +176,7 @@ public class ListViewModel : ViewModelBase
     }
 
     private void NavigateToView<TItem>(string view, string parameter, TItem selectedEntry,
-        Func<TItem, TItem> mapper, Func<TItem> constructor)
+        Func<TItem, TItem> mapper, Func<TItem> constructor, NavigationParameters? parameters = null)
         where TItem : DbEntryModel
     {
         TItem item;
@@ -189,11 +196,10 @@ public class ListViewModel : ViewModelBase
         _navigation.RegionName = RegionNames.ContentRegion;
         _navigation.ViewName = view;
 
-        Navigate(new NavigationParameters
-        {
-            { Consts.Keys.DbModeKey, parameter },
-            { Consts.Keys.ItemKey, item }
-        });
+        parameters ??= new();
+        parameters.Add(Consts.Keys.DbModeKey, parameter);
+        parameters.Add(Consts.Keys.ItemKey, item);
+        Navigate(parameters);
     }
 
     private async Task SubscribeItemAsync<TItem, TEntity>((TItem Item, string DbMode) tuple, ObservableCollection<TItem> store)

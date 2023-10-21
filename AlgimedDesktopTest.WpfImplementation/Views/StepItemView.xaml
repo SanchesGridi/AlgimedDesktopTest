@@ -20,6 +20,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -129,7 +130,16 @@
                    Foreground="OrangeRed"
                    Content="Use dot(.) as separator"/>
         </Border>
-        <Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"
+        <Label Grid.Row="7" Grid.Column="0"
+               FontWeight="Bold"
+               Style="{StaticResource Std_Label}"
+               Content="{Binding Item.ModeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue='not set'}"
+               ContentStringFormat="Step Parent Id: [{0}]"/>
+        <ComboBox Grid.Row="7" Grid.Column="1"
+                  Margin="5" VerticalContentAlignment="Center"
+                  SelectedItem="{Binding SelectedId}"
+                  ItemsSource="{Binding Parents}"/>
+        <Grid Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
               VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

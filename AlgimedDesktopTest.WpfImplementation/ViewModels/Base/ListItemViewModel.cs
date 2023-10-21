@@ -35,7 +35,6 @@ public abstract class ListItemViewModel<TItem> : ViewModelBase, INavigationAware
     }
 
     public DelegateCommand GoBackCommand { get; }
-
     public DelegateCommand SaveCommand { get; }
 
     public ListItemViewModel(
@@ -66,7 +65,7 @@ public abstract class ListItemViewModel<TItem> : ViewModelBase, INavigationAware
         Item = navigationContext.Parameters.GetValue<TItem>(Consts.Keys.ItemKey);
     }
 
-    public void OnNavigatedFrom(NavigationContext navigationContext)
+    public virtual void OnNavigatedFrom(NavigationContext navigationContext)
     {
     }
 

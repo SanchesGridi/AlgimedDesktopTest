@@ -13,6 +13,7 @@ public static class Consts
         public const string EditKey = "edit";
         public const string AddKey = "add";
         public const string ItemKey = "item";
+        public const string IdsKey = "ids";
     }
 
     public static class Dialogs
