@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:vm="clr-namespace:AlgimedDesktopTest.WpfImplementation.ViewModels"
@@ -11,10 +12,137 @@
              d:Width="700"
              d:Height="700">
     <Grid>
-        <Grid>
-            <Label HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Content="Hello from StepItemView!"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="140"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0"
+               Style="{StaticResource Std_Label}"
+               Content="Step Destination:"/>
+        <TextBox Grid.Row="0" Grid.Column="1"
+                 Style="{StaticResource Std_TextBox}"
+                 Text="{Binding Item.Destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label Grid.Row="1" Grid.Column="0"
+            Style="{StaticResource Std_Label}"
+            Content="Step Type:"/>
+        <TextBox Grid.Row="1" Grid.Column="1"
+              Style="{StaticResource Std_TextBox}"
+              Text="{Binding Item.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                   BorderBrush="LightGray"
+                   Background="Gray"
+                   Margin="5"
+                   BorderThickness="1"
+                   Height="5">
+            <Separator.Template>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border Background="{TemplateBinding Control.Background}"
+                            BorderBrush="{TemplateBinding Control.BorderBrush}"
+                            BorderThickness="{TemplateBinding Control.BorderThickness}" Margin="0"/>
+                </ControlTemplate>
+            </Separator.Template>
+        </Separator>
+        <Label Grid.Row="3" Grid.Column="0"
+               Style="{StaticResource Std_Label}"
+               Content="Step Timer:"/>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="timer_text_box"
+                 Style="{StaticResource Std_TextBox}"
+                 Text="{Binding Item.Timer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </TextBox.Resources>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding TimerCommand}"
+                                               CommandParameter="{Binding Text, ElementName=timer_text_box}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <Label Grid.Row="4" Grid.Column="0"
+               Style="{StaticResource Std_Label}"
+               Content="Step Speed:"/>
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="speed_text_box"
+                 Style="{StaticResource Std_TextBox}"
+                 Text="{Binding Item.Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </TextBox.Resources>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding SpeedCommand}"
+                                               CommandParameter="{Binding Text, ElementName=speed_text_box}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <Label Grid.Row="5" Grid.Column="0"
+               Style="{StaticResource Std_Label}"
+               Content="Step Volume:"/>
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="volume_text_box"
+                 Style="{StaticResource Std_TextBox}"
+                 Text="{Binding Item.Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </TextBox.Resources>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <prism:InvokeCommandAction Command="{Binding VolumeCommand}"
+                                               CommandParameter="{Binding Text, ElementName=volume_text_box}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                BorderBrush="LightGray"
+                Background="Gray"
+                Margin="5"
+                BorderThickness="2">
+            <Label Style="{StaticResource Std_Label}"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Foreground="OrangeRed"
+                   Content="Use dot(.) as separator"/>
+        </Border>
+        <Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Margin="5"
+                    Content="{Binding DbModeUiText}"
+                    Command="{Binding SaveCommand}"/>
+            <Button Grid.Column="1"
+                    Margin="5"
+                    Content="Back"
+                    Command="{Binding GoBackCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

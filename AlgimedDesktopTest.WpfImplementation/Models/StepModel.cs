@@ -1,11 +1,9 @@
-﻿using Prism.Mvvm;
+﻿using AlgimedDesktopTest.WpfImplementation.Models.Base;
 
 namespace AlgimedDesktopTest.WpfImplementation.Models;
 
-public class StepModel : BindableBase
+public class StepModel : DbEntryModel
 {
-    private readonly int _id;
-
     private double _timer;
     public double Timer
     {
@@ -41,7 +39,14 @@ public class StepModel : BindableBase
         set => SetProperty(ref _volume, value);
     }
 
-    public StepModel(int id) => _id = id;
+    private int? _modeId;
+    public int? ModeId
+    {
+        get => _modeId;
+        set => SetProperty(ref _modeId, value);
+    }
 
-    public int GetId() => _id;
+    public StepModel(int id) : base(id)
+    {
+    }
 }

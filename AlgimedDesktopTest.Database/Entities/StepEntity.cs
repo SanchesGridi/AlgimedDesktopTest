@@ -14,6 +14,6 @@ public class StepEntity : IEntityBase<int>
     public double Volume { get; set; }
 
     [ForeignKey(nameof(Mode))]
-    public virtual int ModeId { get; set; }
+    public virtual int? ModeId { get; set; }
     public virtual ModeEntity? Mode { get; set; }
 }

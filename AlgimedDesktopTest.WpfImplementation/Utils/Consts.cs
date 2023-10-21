@@ -22,7 +22,8 @@ public static class Consts
 
     public static class ViewNames
     {
-        public const string ModeItemView = nameof(ModeItemView);
         public const string ListView = nameof(ListView);
+        public const string ModeItemView = nameof(ModeItemView);
+        public const string StepItemView = nameof(StepItemView);
     }
 }

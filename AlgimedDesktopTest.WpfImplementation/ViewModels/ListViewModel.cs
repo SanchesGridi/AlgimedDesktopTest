@@ -1,8 +1,10 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
 using AlgimedDesktopTest.Database.Entities;
+using AlgimedDesktopTest.Database.Entities.Base;
 using AlgimedDesktopTest.WpfImplementation.Events;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
 using AlgimedDesktopTest.WpfImplementation.Models;
+using AlgimedDesktopTest.WpfImplementation.Models.Base;
 using AlgimedDesktopTest.WpfImplementation.Utils;
 using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
 using AutoMapper;
@@ -22,6 +24,9 @@ namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 
 public class ListViewModel : ViewModelBase
 {
+    private const string ExceptionMessage = "Please select an item!";
+    private const int NewItemId = 0;
+
     private readonly IMapper _mapper;
 
     private bool _initialized;
@@ -55,8 +60,10 @@ public class ListViewModel : ViewModelBase
     }
 
     public DelegateCommand ListViewLoadedCommand { get; }
-    public DelegateCommand RemoveModeCommand { get; }
     public DelegateCommand<string> NavigateToModeCommand { get; set; }
+    public DelegateCommand RemoveModeCommand { get; }
+    public DelegateCommand<string> NavigateToStepCommand { get; }
+    public DelegateCommand RemoveStepCommand { get; }
 
     public ListViewModel(
         IRegionManager regionManager,
@@ -67,10 +74,13 @@ public class ListViewModel : ViewModelBase
         _mapper = mapper;
 
         ListViewLoadedCommand = new(ListViewLoadedCommandExecute);
-        RemoveModeCommand = new(RemoveModeCommandExecute);
         NavigateToModeCommand = new(NavigateToModeCommandExecute);
+        RemoveModeCommand = new(RemoveModeCommandExecute);
+        NavigateToStepCommand = new(NavigateToStepCommandExecute);
+        RemoveStepCommand = new(RemoveStepCommandExecute);
 
-        _eventAggregator.GetEvent<ModeEvent>().Subscribe(ModeSubscribeAction);
+        _eventAggregator.GetEvent<ItemEvent<ModeModel>>().Subscribe(async x => await SubscribeItemAsync<ModeModel, ModeEntity>(x, Modes!));
+        _eventAggregator.GetEvent<ItemEvent<StepModel>>().Subscribe(async x => await SubscribeItemAsync<StepModel, StepEntity>(x, Steps!));
     }
 
     private async void ListViewLoadedCommandExecute()
@@ -94,62 +104,18 @@ public class ListViewModel : ViewModelBase
         }
     }
 
-    private async void RemoveModeCommandExecute()
-    {
-        try
-        {
-            if (SelectedMode != null)
-            {
-                using var context = _application.GetContainer().Resolve<AppDbContext>();
-                var mode = await context.Modes.FirstOrDefaultAsync(x => x.Id == SelectedMode.GetId());
-                if (mode != null)
-                {
-                    context.Modes.Remove(mode);
-                    if (await OneRowAffectedAsync(context))
-                    {
-                        _application.Dispatcher.Invoke(() => Modes!.Remove(SelectedMode));
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            ShowExceptionDialog(ex);
-        }
-    }
-
     private void NavigateToModeCommandExecute(string parameter)
     {
         try
         {
-            var item = null as ModeModel;
-            if (parameter == Consts.Keys.EditKey)
+            static ModeModel InternalMapper(ModeModel selected) => new(selected.GetId())
             {
-                if (SelectedMode == null)
-                {
-                    throw new InvalidOperationException("Please select an item!");
-                }
-                item = new ModeModel(SelectedMode.GetId())
-                {
-                    Name = SelectedMode.Name,
-                    MaxBottleNumber = SelectedMode.MaxBottleNumber,
-                    MaxUsedTips = SelectedMode.MaxUsedTips
-                };
-            }
-            else
-            {
-                const int newItemId = 0;
-                item = new ModeModel(newItemId);
-            }
+                Name = selected.Name,
+                MaxBottleNumber = selected.MaxBottleNumber,
+                MaxUsedTips = selected.MaxUsedTips
+            };
 
-            _navigation.RegionName = RegionNames.ContentRegion;
-            _navigation.ViewName = Consts.ViewNames.ModeItemView;
-
-            Navigate(new NavigationParameters
-            {
-                { Consts.Keys.DbModeKey, parameter },
-                { Consts.Keys.ItemKey, item }
-            });
+            NavigateToView(Consts.ViewNames.ModeItemView, parameter, SelectedMode!, InternalMapper, () => new(NewItemId));
         }
         catch (Exception ex)
         {
@@ -157,33 +123,107 @@ public class ListViewModel : ViewModelBase
         }
     }
 
-    private async void ModeSubscribeAction((ModeModel Item, string DbMode) tuple)
+    private async void RemoveModeCommandExecute()
+    {
+        try
+        {
+            await RemoveEntryAsync<ModeModel, ModeEntity>(SelectedMode!, Modes!);
+        }
+        catch (Exception ex)
+        {
+            ShowExceptionDialog(ex);
+        }
+    }
+
+    private void NavigateToStepCommandExecute(string parameter)
+    {
+        try
+        {
+            static StepModel InternalMapper(StepModel selected) => new(selected.GetId())
+            {
+                Timer = selected.Timer,
+                Destination = selected.Destination,
+                Speed = selected.Speed,
+                Type = selected.Type,
+                Volume = selected.Volume
+            };
+
+            NavigateToView(Consts.ViewNames.StepItemView, parameter, SelectedStep!, InternalMapper, () => new(NewItemId));
+        }
+        catch (Exception ex)
+        {
+            ShowExceptionDialog(ex);
+        }
+    }
+
+    private async void RemoveStepCommandExecute()
+    {
+        try
+        {
+            await RemoveEntryAsync<StepModel, StepEntity>(SelectedStep!, Steps!);
+        }
+        catch (Exception ex)
+        {
+            ShowExceptionDialog(ex);
+        }
+    }
+
+    private void NavigateToView<TItem>(string view, string parameter, TItem selectedEntry,
+        Func<TItem, TItem> mapper, Func<TItem> constructor)
+        where TItem : DbEntryModel
+    {
+        TItem item;
+        if (parameter == Consts.Keys.EditKey)
+        {
+            if (selectedEntry == null)
+            {
+                throw new InvalidOperationException(ExceptionMessage);
+            }
+            item = mapper.Invoke(selectedEntry);
+        }
+        else
+        {
+            item = constructor.Invoke();
+        }
+
+        _navigation.RegionName = RegionNames.ContentRegion;
+        _navigation.ViewName = view;
+
+        Navigate(new NavigationParameters
+        {
+            { Consts.Keys.DbModeKey, parameter },
+            { Consts.Keys.ItemKey, item }
+        });
+    }
+
+    private async Task SubscribeItemAsync<TItem, TEntity>((TItem Item, string DbMode) tuple, ObservableCollection<TItem> store)
+        where TItem : DbEntryModel where TEntity : class
     {
         try
         {
             using var context = _application.GetContainer().Resolve<AppDbContext>();
             if (tuple.DbMode == Consts.Keys.AddKey)
             {
-                var insertable = (await context.Modes.AddAsync(_mapper.Map<ModeEntity>(tuple.Item))).Entity;
+                var insertable = (await context.Set<TEntity>().AddAsync(_mapper.Map<TEntity>(tuple.Item))).Entity;
                 if (await OneRowAffectedAsync(context))
                 {
-                    _application.Dispatcher.Invoke(() => Modes!.Add(_mapper.Map<ModeModel>(insertable)));
+                    _application.Dispatcher.Invoke(() => store.Add(_mapper.Map<TItem>(insertable)));
                 }
             }
             else
             {
-                var updateble = _mapper.Map<ModeEntity>(tuple.Item);
-                context.Modes.Update(updateble);
+                var updateble = _mapper.Map<TEntity>(tuple.Item);
+                context.Set<TEntity>().Update(updateble);
                 if (await OneRowAffectedAsync(context))
                 {
                     _application.Dispatcher.Invoke(() =>
                     {
-                        var mode = Modes!.FirstOrDefault(x => x.GetId() == tuple.Item.GetId());
-                        if (mode != null)
+                        var item = store.FirstOrDefault(x => x.GetId() == tuple.Item.GetId());
+                        if (item != null)
                         {
-                            var index = Modes!.IndexOf(mode);
-                            Modes.Insert(index, tuple.Item);
-                            Modes!.RemoveAt(index + 1);
+                            var index = store.IndexOf(item);
+                            store.Insert(index, tuple.Item);
+                            store.RemoveAt(index + 1);
                         }
                     });
                 }
@@ -192,6 +232,25 @@ public class ListViewModel : ViewModelBase
         catch (Exception ex)
         {
             ShowExceptionDialog(ex);
+        }
+    }
+
+    private async Task RemoveEntryAsync<TItem, TEntity>(TItem selectedEntry, ObservableCollection<TItem> storage)
+        where TItem : DbEntryModel
+        where TEntity : class, IEntityBase<int>
+    {
+        if (selectedEntry != null)
+        {
+            using var context = _application.GetContainer().Resolve<AppDbContext>();
+            var entity = await context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == selectedEntry.GetId());
+            if (entity != null)
+            {
+                context.Set<TEntity>().Remove(entity);
+                if (await OneRowAffectedAsync(context))
+                {
+                    _application.Dispatcher.Invoke(() => storage.Remove(selectedEntry));
+                }
+            }
         }
     }
 

@@ -11,21 +11,6 @@
              d:DataContext="{d:DesignInstance Type=vm:ModeItemViewModel}"
              d:Width="700"
              d:Height="700">
-    <UserControl.Resources>
-        <Style x:Key="Std_TextBox" TargetType="TextBox">
-            <Style.Setters>
-                <Setter Property="Margin" Value="5" />
-                <Setter Property="BorderThickness" Value="2" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-            </Style.Setters>
-        </Style>
-        <Style x:Key="Std_Label" TargetType="Label">
-            <Style.Setters>
-                <Setter Property="Margin" Value="5"/>
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-            </Style.Setters>
-        </Style>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -85,7 +70,6 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <!--todo-->
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
               VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>

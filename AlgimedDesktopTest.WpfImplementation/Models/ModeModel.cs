@@ -1,11 +1,9 @@
-﻿using Prism.Mvvm;
+﻿using AlgimedDesktopTest.WpfImplementation.Models.Base;
 
 namespace AlgimedDesktopTest.WpfImplementation.Models;
 
-public class ModeModel : BindableBase
+public class ModeModel : DbEntryModel
 {
-    private readonly int _id;
-
     private string? _name;
     public string? Name
     {
@@ -27,7 +25,7 @@ public class ModeModel : BindableBase
         set => SetProperty(ref _maxUsedTips, value);
     }
 
-    public ModeModel(int id) => _id = id;
-
-    public int GetId() => _id;
+    public ModeModel(int id) : base(id)
+    {
+    }
 }

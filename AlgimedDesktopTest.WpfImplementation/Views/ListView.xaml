@@ -83,7 +83,85 @@
             </Grid>
         </TabItem>
         <TabItem Header="Steps">
-            <!--todo-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Margin="5, 5, 1, 1" Width="100" Content="Add"
+                            Command="{Binding NavigateToStepCommand}"
+                            CommandParameter="{x:Static u:Consts.XamlAddKey}"/>
+                    <Button Margin="1, 5, 1, 1" Width="100" Content="Edit"
+                            Command="{Binding NavigateToStepCommand}"
+                            CommandParameter="{x:Static u:Consts.XamlEditKey}"/>
+                    <Button Margin="1, 5, 0, 1" Width="100" Content="Remove"
+                            Command="{Binding RemoveStepCommand}"/>
+                </StackPanel>
+                <ListView Grid.Row="1"
+                          Margin="5"
+                          SelectionMode="Single"
+                          Background="Gray"
+                          SelectedItem="{Binding SelectedStep}"
+                          ItemsSource="{Binding Steps}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Destination: "/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:StepModel">
+                                            <TextBlock Text="{Binding Destination}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Type: "/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:StepModel">
+                                            <TextBlock Text="{Binding Type}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Timer: "/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:StepModel">
+                                            <TextBlock Text="{Binding Timer}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Speed: "/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:StepModel">
+                                            <TextBlock Text="{Binding Speed}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Volume: "/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:StepModel">
+                                            <TextBlock Text="{Binding Volume}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
         </TabItem>
     </TabControl>
 </UserControl>

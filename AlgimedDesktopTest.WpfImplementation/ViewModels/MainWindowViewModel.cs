@@ -6,36 +6,36 @@ using Prism.Events;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 
-namespace AlgimedDesktopTest.WpfImplementation.ViewModels
+namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
+
+public class MainWindowViewModel : ViewModelBase
 {
-    public class MainWindowViewModel : ViewModelBase
+    private readonly IStartPageOptionService _startPageOptionService;
+
+    private string _title = "Welcome";
+    public string Title
     {
-        private readonly IStartPageOptionService _startPageOptionService;
-        private string _title = "Welcome";
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
+        get => _title;
+        set => SetProperty(ref _title, value);
+    }
 
-        public DelegateCommand WindowLoadedCommand { get; }
+    public DelegateCommand WindowLoadedCommand { get; }
 
-        public MainWindowViewModel(
-            IRegionManager regionManager,
-            IEventAggregator eventAggregator,
-            IDialogService dialogService,
-            IStartPageOptionService startPageOptionService) : base(regionManager, eventAggregator, dialogService)
-        {
-            _startPageOptionService = startPageOptionService;
+    public MainWindowViewModel(
+        IRegionManager regionManager,
+        IEventAggregator eventAggregator,
+        IDialogService dialogService,
+        IStartPageOptionService startPageOptionService) : base(regionManager, eventAggregator, dialogService)
+    {
+        _startPageOptionService = startPageOptionService;
 
-            WindowLoadedCommand = new DelegateCommand(WindowLoadedCommandExecute);
-        }
+        WindowLoadedCommand = new DelegateCommand(WindowLoadedCommandExecute);
+    }
 
-        private void WindowLoadedCommandExecute()
-        {
-            _navigation.RegionName = RegionNames.PageRegion;
-            _navigation.ViewName = _startPageOptionService.GetPageName();
-            Navigate();
-        }
+    private void WindowLoadedCommandExecute()
+    {
+        _navigation.RegionName = RegionNames.PageRegion;
+        _navigation.ViewName = _startPageOptionService.GetPageName();
+        Navigate();
     }
 }
