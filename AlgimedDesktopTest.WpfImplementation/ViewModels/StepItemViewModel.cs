@@ -14,7 +14,7 @@ namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 public class StepItemViewModel : ListItemViewModel<StepModel>
 {
     private const string Separator = ".";
-    private const string Pattern = @"^[0-9]+\.?[0-9]+$";
+    private const string Pattern = @"^[0-9]+\.?([0-9]+)?$";
     private const int NotExistingId = -1;
 
     private readonly NumberFormatInfo _formatProvider;
@@ -74,6 +74,8 @@ public class StepItemViewModel : ListItemViewModel<StepModel>
         {
             SelectedId = Item!.ModeId.Value;
         }
+
+        RaisePropertyChanged(nameof(SelectedId));
 
         // we not change any number text box here so we should allow save default value
         _checkTimer = true;
