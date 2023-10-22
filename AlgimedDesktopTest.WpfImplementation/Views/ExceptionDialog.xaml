@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:vm="clr-namespace:AlgimedDesktopTest.WpfImplementation.ViewModels"
+             xmlns:wpf="clr-namespace:AlgimedDesktopTest.WpfImplementation.Wpf"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:ExceptionDialogViewModel}"
@@ -19,6 +20,14 @@
             <Setter Property="Background" Value="DarkGray"/>
             <Setter Property="Height" Value="500"/>
             <Setter Property="Width" Value="400"/>
+            <Setter Property="wpf:AttachedProperties.InputBindings">
+                <Setter.Value>
+                    <InputBindingCollection>
+                        <KeyBinding Key="Return" Command="{Binding CloseCommand}"/>
+                        <KeyBinding Key="Esc" Command="{Binding CloseCommand}"/>
+                    </InputBindingCollection>
+                </Setter.Value>
+            </Setter>
         </Style>
     </prism:Dialog.WindowStyle>
     <Grid>

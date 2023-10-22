@@ -51,7 +51,7 @@ namespace AlgimedDesktopTest.WpfImplementation
             // todo:
             // excel loading
             // wf - project
-            // app loader project
+            // app installer project
             var option = StartPageOption.Registration;
             var service = Container.Resolve<IStartPageOptionService>();
             service.Set(option);
