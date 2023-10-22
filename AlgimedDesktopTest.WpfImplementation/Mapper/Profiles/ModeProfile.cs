@@ -1,17 +1,12 @@
 ﻿using AlgimedDesktopTest.Database.Entities;
+using AlgimedDesktopTest.WpfImplementation.Mapper.Profiles.Base;
 using AlgimedDesktopTest.WpfImplementation.Models;
-using AutoMapper;
 
 namespace AlgimedDesktopTest.WpfImplementation.Mapper.Profiles;
 
-public class ModeProfile : Profile
+public class ModeProfile : DbEntryProfile<ModeModel, ModeEntity>
 {
-    public ModeProfile()
+    public ModeProfile() : base(x => new(x))
     {
-        CreateMap<ModeEntity, ModeModel>()
-            .ConstructUsing(src => new(src.Id));
-
-        CreateMap<ModeModel, ModeEntity>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.GetId()));
     }
 }

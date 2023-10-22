@@ -4,9 +4,9 @@ using AlgimedDesktopTest.WpfImplementation.Models;
 
 namespace AlgimedDesktopTest.WpfImplementation.Mapper.Profiles;
 
-public class StepProfile : DbEntryProfile<StepModel, StepEntity>
+public class UserProfile : DbEntryProfile<UserModel, UserEntity>
 {
-    public StepProfile() : base(x => new(x))
+    public UserProfile() : base(x => new(x))
     {
     }
 }
