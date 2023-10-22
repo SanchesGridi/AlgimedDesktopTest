@@ -1,9 +1,11 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
 using AlgimedDesktopTest.WpfImplementation.Events;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
+using AlgimedDesktopTest.WpfImplementation.Models;
 using AlgimedDesktopTest.WpfImplementation.Services.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Utils;
 using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
@@ -20,6 +22,7 @@ public class AuthorizationPageViewModel : PageViewModel
     private const string ExceptionMessage = "Invalid login data!";
 
     private readonly IPasswordBoxService _passwordBoxService;
+    private readonly IMapper _mapper;
 
     private string? _password;
 
@@ -38,9 +41,11 @@ public class AuthorizationPageViewModel : PageViewModel
         IRegionManager regionManager,
         IEventAggregator eventAggregator,
         IDialogService dialogService,
-        IPasswordBoxService passwordBoxService) : base(regionManager, eventAggregator, dialogService)
+        IPasswordBoxService passwordBoxService,
+        IMapper mapper) : base(regionManager, eventAggregator, dialogService)
     {
         _passwordBoxService = passwordBoxService;
+        _mapper = mapper;
 
         SignUpCommand = new(SignUpCommandExecute);
         PasswordChangedCommand = new(PasswordChangedCommandExecute);
@@ -71,12 +76,13 @@ public class AuthorizationPageViewModel : PageViewModel
         {
             // todo: web api
             using var context = _application.GetContainer().Resolve<AppDbContext>();
-            var user = await context.Users.FirstOrDefaultAsync(x => x.Login == Login && x.Password == _password)
+            var entity = await context.Users.FirstOrDefaultAsync(x => x.Login == Login && x.Password == _password)
                 ?? throw new InvalidOperationException(ExceptionMessage);
+            var model = _mapper.Map<UserModel>(entity);
 
             _navigation.RegionName = RegionNames.PageRegion;
             _navigation.ViewName = Consts.ViewNames.ItemsPage;
-            Navigate();
+            Navigate(new() { { Consts.Keys.UserKey, model } });
         }
         catch (Exception ex)
         {
