@@ -1,17 +1,28 @@
-﻿using AlgimedDesktopTest.WpfImplementation.Events;
-using AlgimedDesktopTest.WpfImplementation.Services.Interfaces;
+﻿using AlgimedDesktopTest.Database.Contexts;
+using AlgimedDesktopTest.Shared.Devices.Interfaces;
+using AlgimedDesktopTest.WpfImplementation.Events;
+using AlgimedDesktopTest.WpfImplementation.Extensions;
+using AlgimedDesktopTest.WpfImplementation.Models;
 using AlgimedDesktopTest.WpfImplementation.Utils;
 using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Regions;
 using Prism.Services.Dialogs;
+using System;
+using System.Linq;
 
 namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    private readonly IStartPageOptionService _startPageOptionService;
+    private readonly IDeviceService _deviceService;
+    private readonly IMapper _mapper;
+
+    private UserModel? _currentUser;
 
     private string? _title;
     public string? Title
@@ -26,19 +37,46 @@ public class MainWindowViewModel : ViewModelBase
         IRegionManager regionManager,
         IEventAggregator eventAggregator,
         IDialogService dialogService,
-        IStartPageOptionService startPageOptionService) : base(regionManager, eventAggregator, dialogService)
+        IDeviceService deviceService,
+        IMapper mapper) : base(regionManager, eventAggregator, dialogService)
     {
-        _startPageOptionService = startPageOptionService;
+        _deviceService = deviceService;
+        _mapper = mapper;
 
-        WindowLoadedCommand = new DelegateCommand(WindowLoadedCommandExecute);
+        WindowLoadedCommand = new(WindowLoadedCommandExecute);
 
         _eventAggregator.GetEvent<WindowTitleEvent>().Subscribe(title => Title = title);
     }
 
-    private void WindowLoadedCommandExecute()
+    private async void WindowLoadedCommandExecute()
     {
-        _navigation.RegionName = RegionNames.PageRegion;
-        _navigation.ViewName = _startPageOptionService.GetPageName();
-        Navigate();
+        // todo:
+        // excel loading
+        // wf project
+        // app installer project
+        // web api project
+        try
+        {
+            var deviceId = _deviceService.GetId();
+            using var context = _application.GetContainer().Resolve<AppDbContext>();
+            var user = (await context.Parameters.Where(x => x.Name == Consts.Keys.DeviceKey && x.Value == deviceId)
+                .OrderByDescending(x => x.User!.CreatedAt).FirstOrDefaultAsync()
+            )?.User;
+
+            var defaultStartPage = Consts.ViewNames.AuthorizationPage;
+            if (user != null)
+            {
+                defaultStartPage = user.Parameters.FirstOrDefault(x => x.Name == Consts.Keys.PageKey)?.Value;
+                _currentUser = _mapper.Map<UserModel>(user);
+            }
+
+            _navigation.RegionName = RegionNames.PageRegion;
+            _navigation.ViewName = defaultStartPage;
+            Navigate(defaultStartPage == Consts.ViewNames.ItemsPage ? new() { { Consts.Keys.UserKey, _currentUser } } : null);
+        }
+        catch (Exception ex)
+        {
+            ShowExceptionDialog(ex);
+        }
     }
 }

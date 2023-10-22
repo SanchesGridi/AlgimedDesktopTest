@@ -1,4 +1,6 @@
 ﻿using AlgimedDesktopTest.WpfImplementation.Models.Base;
+using System;
+using System.Collections.ObjectModel;
 
 namespace AlgimedDesktopTest.WpfImplementation.Models;
 
@@ -30,6 +32,20 @@ public class UserModel : DbEntryModel
     {
         get => _password;
         set => SetProperty(ref _password, value);
+    }
+
+    private DateTime _createdAt;
+    public DateTime CreatedAt
+    {
+        get => _createdAt;
+        set => SetProperty(ref _createdAt, value);
+    }
+
+    private ObservableCollection<ParameterModel>? _parameters;
+    public ObservableCollection<ParameterModel>? Parameters
+    {
+        get => _parameters;
+        set => SetProperty(ref _parameters, value);
     }
 
     public UserModel(int id) : base(id)

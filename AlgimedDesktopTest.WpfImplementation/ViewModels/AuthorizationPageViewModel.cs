@@ -1,4 +1,5 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
+using AlgimedDesktopTest.Shared.Devices.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Events;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
 using AlgimedDesktopTest.WpfImplementation.Models;
@@ -13,6 +14,7 @@ using Prism.Ioc;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
+using System.Linq;
 
 namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 
@@ -43,7 +45,8 @@ public class AuthorizationPageViewModel : PageViewModel
         IEventAggregator eventAggregator,
         IDialogService dialogService,
         IPasswordBoxService passwordBoxService,
-        IMapper mapper) : base(regionManager, eventAggregator, dialogService)
+        IDeviceService deviceService,
+        IMapper mapper) : base(regionManager, eventAggregator, dialogService, deviceService)
     {
         _passwordBoxService = passwordBoxService;
         _mapper = mapper;
@@ -84,13 +87,39 @@ public class AuthorizationPageViewModel : PageViewModel
         {
             // todo: web api
             using var context = _application.GetContainer().Resolve<AppDbContext>();
-            var entity = await context.Users.FirstOrDefaultAsync(x => x.Login == Login && x.Password == _password)
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Login == Login && x.Password == _password)
                 ?? throw new InvalidOperationException(ExceptionMessage);
-            var model = _mapper.Map<UserModel>(entity);
+
+            var deviceParameter = user.Parameters.FirstOrDefault(x => x.Name == Consts.Keys.DeviceKey);
+            if (deviceParameter == null)
+            {
+                deviceParameter = new() { Name = Consts.Keys.DeviceKey, Value = _deviceService.GetId(), UserId = user.Id };
+                context.Parameters.Add(deviceParameter);
+            }
+            else
+            {
+                deviceParameter.Value = _deviceService.GetId();
+                context.Parameters.Update(deviceParameter);
+            }
+
+            var page = Consts.ViewNames.ItemsPage;
+            var pageParameter = user.Parameters.FirstOrDefault(x => x.Name == Consts.Keys.PageKey);
+            if (pageParameter == null)
+            {
+                pageParameter = new() { Name = Consts.Keys.PageKey, Value = page, UserId = user.Id };
+                context.Parameters.Add(pageParameter);
+            }
+            else
+            {
+                pageParameter.Value = page;
+                context.Parameters.Update(pageParameter);
+            }
+
+            await context.SaveChangesAsync();
 
             _navigation.RegionName = RegionNames.PageRegion;
-            _navigation.ViewName = Consts.ViewNames.ItemsPage;
-            Navigate(new() { { Consts.Keys.UserKey, model } });
+            _navigation.ViewName = page;
+            Navigate(new() { { Consts.Keys.UserKey, _mapper.Map<UserModel>(user) } });
         }
         catch (Exception ex)
         {

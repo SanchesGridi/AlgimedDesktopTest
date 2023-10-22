@@ -1,4 +1,5 @@
-﻿using AlgimedDesktopTest.WpfImplementation.Enums;
+﻿using AlgimedDesktopTest.Shared.Devices.Classes;
+using AlgimedDesktopTest.Shared.Devices.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
 using AlgimedDesktopTest.WpfImplementation.Services.Classes;
 using AlgimedDesktopTest.WpfImplementation.Services.Interfaces;
@@ -21,7 +22,7 @@ namespace AlgimedDesktopTest.WpfImplementation
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry
-                .RegisterSingleton<IStartPageOptionService, StartPageOptionService>() // todo: store
+                .RegisterSingleton<IDeviceService, DeviceService>()
                 .RegisterSingleton<IPasswordBoxService, PasswordBoxService>()
                 .RegisterAutoMapperInstance()
                 .RegisterAppDbContext();
@@ -44,19 +45,6 @@ namespace AlgimedDesktopTest.WpfImplementation
             regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, nameof(ListView));
             regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, nameof(ModeItemView));
             regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, nameof(StepItemView));
-        }
-
-        protected override void OnInitialized()
-        {
-            // todo:
-            // excel loading
-            // wf - project
-            // app installer project
-            var option = StartPageOption.Registration;
-            var service = Container.Resolve<IStartPageOptionService>();
-            service.Set(option);
-
-            base.OnInitialized();
         }
     }
 }

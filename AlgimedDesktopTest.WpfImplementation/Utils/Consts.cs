@@ -15,6 +15,8 @@ public static class Consts
         public const string ItemKey = "item";
         public const string IdsKey = "ids";
         public const string UserKey = "user";
+        public const string PageKey = "page";
+        public const string DeviceKey = "device";
     }
 
     public static class Dialogs

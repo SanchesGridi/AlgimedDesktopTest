@@ -15,6 +15,7 @@ public static class ContainerRegistryExtensions
             cfg.AddProfile<ModeProfile>();
             cfg.AddProfile<StepProfile>();
             cfg.AddProfile<UserProfile>();
+            cfg.AddProfile<ParameterProfile>();
         }).CreateMapper());
 
         return @this;

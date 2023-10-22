@@ -1,5 +1,6 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
 using AlgimedDesktopTest.Database.Entities;
+using AlgimedDesktopTest.Shared.Devices.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Events;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
 using AlgimedDesktopTest.WpfImplementation.Models;
@@ -49,7 +50,8 @@ public class RegistrationPageViewModel : PageViewModel
         IEventAggregator eventAggregator,
         IDialogService dialogService,
         IPasswordBoxService passwordBoxService,
-        IMapper mapper) : base(regionManager, eventAggregator, dialogService)
+        IDeviceService deviceService,
+        IMapper mapper) : base(regionManager, eventAggregator, dialogService, deviceService)
     {
         _passwordBoxService = passwordBoxService;
         _mapper = mapper;
@@ -111,6 +113,7 @@ public class RegistrationPageViewModel : PageViewModel
             else
             {
                 User!.Password = _password;
+                User!.CreatedAt = DateTime.Now;
 
                 await context.Users.AddAsync(_mapper.Map<UserEntity>(User));
                 await context.SaveChangesAsync();

@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AlgimedDesktopTest.Database\AlgimedDesktopTest.Database.csproj" />
+    <ProjectReference Include="..\AlgimedDesktopTest.Shared\AlgimedDesktopTest.Shared.csproj" />
   </ItemGroup>
 </Project>
