@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.WpfImplementation", "AlgimedDesktopTest.WpfImplementation.csproj", "{ADBB97B4-E29C-4ACD-AC1C-45D259873393}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.WpfImplementation", "AlgimedDesktopTest.WpfImplementation\AlgimedDesktopTest.WpfImplementation.csproj", "{ADBB97B4-E29C-4ACD-AC1C-45D259873393}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.Database", "..\AlgimedDesktopTest.Database\AlgimedDesktopTest.Database.csproj", "{38A9D21C-0A27-4192-92E9-D118C7969E63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.Database", "AlgimedDesktopTest.Database\AlgimedDesktopTest.Database.csproj", "{38A9D21C-0A27-4192-92E9-D118C7969E63}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.Shared", "..\AlgimedDesktopTest.Shared\AlgimedDesktopTest.Shared.csproj", "{D1937C94-DD30-44C9-90BF-6F7BC232787A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.Shared", "AlgimedDesktopTest.Shared\AlgimedDesktopTest.Shared.csproj", "{D1937C94-DD30-44C9-90BF-6F7BC232787A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgimedDesktopTest.WindowsFormsImplementation", "..\AlgimedDesktopTest.WindowsFormsImplementation\AlgimedDesktopTest.WindowsFormsImplementation.csproj", "{2257DCA8-7E66-4B37-81DE-E9166064D9A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgimedDesktopTest.WindowsFormsImplementation", "AlgimedDesktopTest.WindowsFormsImplementation\AlgimedDesktopTest.WindowsFormsImplementation.csproj", "{2257DCA8-7E66-4B37-81DE-E9166064D9A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
