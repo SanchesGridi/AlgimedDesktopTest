@@ -7,9 +7,11 @@ public class AppDbContext : DbContext
 {
     public DbSet<ModeEntity> Modes { get; set; }
     public DbSet<StepEntity> Steps { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
+        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 

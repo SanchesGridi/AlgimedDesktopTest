@@ -51,7 +51,9 @@ namespace AlgimedDesktopTest.WpfImplementation
             // registration
             // authorization (WebApi)
             // excel loading
-            // store value
+            // store value [IStartPageOptionService]
+            // wf - project
+            // app loader project
             var option = StartPageOption.Items;
             var service = Container.Resolve<IStartPageOptionService>();
             service.Set(option);

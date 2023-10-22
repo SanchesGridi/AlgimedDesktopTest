@@ -7,12 +7,28 @@
              xmlns:vm="clr-namespace:AlgimedDesktopTest.WpfImplementation.ViewModels"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vm:RegistrationPageViewModel}"
+             d:DataContext="{d:DesignInstance Type=vm:AuthorizationPageViewModel}"
              d:Width="700"
-             d:Height="700">
+             d:Height="700"
+             d:Background="DarkGray"
+             Background="DarkGray">
     <Grid>
-        <Label HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Content="Hello from AuthorizationPage!"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Button DockPanel.Dock="Right"
+                    Margin="5" Padding="2.5"
+                    MaxWidth="100"
+                    HorizontalAlignment="Right"
+                    Content="Sign up"
+                    Command="{Binding SignUpCommand}"/>
+            <Label DockPanel.Dock="Right"
+                   Margin="5"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Right"
+                   Content="Not have account? Lets:"/>
+        </DockPanel>
     </Grid>
 </UserControl>

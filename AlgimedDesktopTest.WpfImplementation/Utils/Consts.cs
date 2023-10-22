@@ -26,5 +26,8 @@ public static class Consts
         public const string ListView = nameof(ListView);
         public const string ModeItemView = nameof(ModeItemView);
         public const string StepItemView = nameof(StepItemView);
+        public const string RegistrationPage = nameof(RegistrationPage);
+        public const string AuthorizationPage = nameof(AuthorizationPage);
+        public const string ItemsPage = nameof(ItemsPage); // not used yet
     }
 }

@@ -1,4 +1,5 @@
-﻿using AlgimedDesktopTest.WpfImplementation.Services.Interfaces;
+﻿using AlgimedDesktopTest.WpfImplementation.Events;
+using AlgimedDesktopTest.WpfImplementation.Services.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Utils;
 using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
 using Prism.Commands;
@@ -12,8 +13,8 @@ public class MainWindowViewModel : ViewModelBase
 {
     private readonly IStartPageOptionService _startPageOptionService;
 
-    private string _title = "Welcome";
-    public string Title
+    private string? _title;
+    public string? Title
     {
         get => _title;
         set => SetProperty(ref _title, value);
@@ -30,6 +31,8 @@ public class MainWindowViewModel : ViewModelBase
         _startPageOptionService = startPageOptionService;
 
         WindowLoadedCommand = new DelegateCommand(WindowLoadedCommandExecute);
+
+        _eventAggregator.GetEvent<WindowTitleEvent>().Subscribe(title => Title = title);
     }
 
     private void WindowLoadedCommandExecute()

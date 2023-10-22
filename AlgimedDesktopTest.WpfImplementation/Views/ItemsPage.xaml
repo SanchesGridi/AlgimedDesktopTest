@@ -26,6 +26,7 @@
                     Content="Sign out"/>
             <Label DockPanel.Dock="Right"
                    Margin="5"
+                   FontWeight="Bold"
                    HorizontalAlignment="Right"
                    Content="Profile:"/>
         </DockPanel>
