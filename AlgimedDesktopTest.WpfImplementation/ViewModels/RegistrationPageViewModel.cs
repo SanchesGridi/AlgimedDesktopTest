@@ -96,6 +96,7 @@ public class RegistrationPageViewModel : PageViewModel
     {
         try
         {
+            // todo: web api
             using var context = _application.GetContainer().Resolve<AppDbContext>();
 
             var uShallNotPass = string.IsNullOrWhiteSpace(_password) && string.IsNullOrWhiteSpace(_confirmPassword);
