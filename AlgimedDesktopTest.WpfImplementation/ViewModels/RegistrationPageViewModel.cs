@@ -13,13 +13,15 @@ using Prism.Ioc;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using System;
+using System.Linq;
 
 namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 
 public class RegistrationPageViewModel : PageViewModel
 {
     private const string TitleName = "Registration";
-    private const string ExceptionMessage = "Check passwords please!";
+    private const string PasswordExceptionMessage = "Check passwords please!";
+    private const string LoginExceptionMessage = "This login is already taken!";
     private const string PasswordControlName = "p_password_box";
     private const string ConfirmPasswordControlName = "cp_password_box";
     private const int NewUserId = 0;
@@ -94,15 +96,21 @@ public class RegistrationPageViewModel : PageViewModel
     {
         try
         {
-            if (_password != _confirmPassword)
+            using var context = _application.GetContainer().Resolve<AppDbContext>();
+
+            var uShallNotPass = string.IsNullOrWhiteSpace(_password) && string.IsNullOrWhiteSpace(_confirmPassword);
+            if (_password != _confirmPassword || uShallNotPass)
             {
-                throw new InvalidOperationException(ExceptionMessage);
+                throw new InvalidOperationException(PasswordExceptionMessage);
+            }
+            else if (context.Users.Select(x => x.Login).Contains(User!.Login))
+            {
+                throw new InvalidOperationException(LoginExceptionMessage);
             }
             else
             {
                 User!.Password = _password;
 
-                using var context = _application.GetContainer().Resolve<AppDbContext>();
                 await context.Users.AddAsync(_mapper.Map<UserEntity>(User));
                 await context.SaveChangesAsync();
 
