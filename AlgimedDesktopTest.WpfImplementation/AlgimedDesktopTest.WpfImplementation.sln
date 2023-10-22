@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.WpfImple
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.Database", "..\AlgimedDesktopTest.Database\AlgimedDesktopTest.Database.csproj", "{38A9D21C-0A27-4192-92E9-D118C7969E63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgimedDesktopTest.Shared", "..\AlgimedDesktopTest.Shared\AlgimedDesktopTest.Shared.csproj", "{D1937C94-DD30-44C9-90BF-6F7BC232787A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgimedDesktopTest.Shared", "..\AlgimedDesktopTest.Shared\AlgimedDesktopTest.Shared.csproj", "{D1937C94-DD30-44C9-90BF-6F7BC232787A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgimedDesktopTest.WindowsFormsImplementation", "..\AlgimedDesktopTest.WindowsFormsImplementation\AlgimedDesktopTest.WindowsFormsImplementation.csproj", "{2257DCA8-7E66-4B37-81DE-E9166064D9A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D1937C94-DD30-44C9-90BF-6F7BC232787A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1937C94-DD30-44C9-90BF-6F7BC232787A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1937C94-DD30-44C9-90BF-6F7BC232787A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2257DCA8-7E66-4B37-81DE-E9166064D9A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2257DCA8-7E66-4B37-81DE-E9166064D9A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2257DCA8-7E66-4B37-81DE-E9166064D9A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2257DCA8-7E66-4B37-81DE-E9166064D9A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
