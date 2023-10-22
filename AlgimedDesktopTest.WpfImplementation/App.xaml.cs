@@ -22,6 +22,7 @@ namespace AlgimedDesktopTest.WpfImplementation
         {
             containerRegistry
                 .RegisterSingleton<IStartPageOptionService, StartPageOptionService>()
+                .RegisterSingleton<IPasswordBoxService, PasswordBoxService>()
                 .RegisterAutoMapperInstance()
                 .RegisterAppDbContext();
 
@@ -54,7 +55,7 @@ namespace AlgimedDesktopTest.WpfImplementation
             // store value [IStartPageOptionService]
             // wf - project
             // app loader project
-            var option = StartPageOption.Items;
+            var option = StartPageOption.Authorization;
             var service = Container.Resolve<IStartPageOptionService>();
             service.Set(option);
 

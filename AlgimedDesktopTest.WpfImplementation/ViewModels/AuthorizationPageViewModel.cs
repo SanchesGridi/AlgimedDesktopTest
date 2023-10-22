@@ -1,29 +1,56 @@
-﻿using AlgimedDesktopTest.WpfImplementation.Events;
+﻿using AlgimedDesktopTest.Database.Contexts;
+using AlgimedDesktopTest.WpfImplementation.Events;
+using AlgimedDesktopTest.WpfImplementation.Extensions;
+using AlgimedDesktopTest.WpfImplementation.Services.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Utils;
 using AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Regions;
 using Prism.Services.Dialogs;
+using System;
 
 namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 
 public class AuthorizationPageViewModel : PageViewModel
 {
-    public DelegateCommand SignUpCommand { get; set; }
+    private const string TitleName = "Authorization";
+    private const string ExceptionMessage = "Invalid login data!";
+
+    private readonly IPasswordBoxService _passwordBoxService;
+
+    private string? _password;
+
+    private string? _login;
+    public string? Login
+    {
+        get => _login;
+        set => SetProperty(ref _login, value);
+    }
+
+    public DelegateCommand SignUpCommand { get; }
+    public DelegateCommand<object> PasswordChangedCommand { get; }
+    public DelegateCommand SignInCommand { get; }
 
     public AuthorizationPageViewModel(
         IRegionManager regionManager,
         IEventAggregator eventAggregator,
-        IDialogService dialogService) : base(regionManager, eventAggregator, dialogService)
+        IDialogService dialogService,
+        IPasswordBoxService passwordBoxService) : base(regionManager, eventAggregator, dialogService)
     {
+        _passwordBoxService = passwordBoxService;
+
         SignUpCommand = new(SignUpCommandExecute);
+        PasswordChangedCommand = new(PasswordChangedCommandExecute);
+        SignInCommand = new(SignInCommandExecute);
     }
 
     public override void OnNavigatedTo(NavigationContext navigationContext)
     {
         base.OnNavigatedTo(navigationContext);
-        _eventAggregator.GetEvent<WindowTitleEvent>().Publish("Authorization");
+        _eventAggregator.GetEvent<WindowTitleEvent>().Publish(TitleName);
     }
 
     private void SignUpCommandExecute()
@@ -31,5 +58,29 @@ public class AuthorizationPageViewModel : PageViewModel
         _navigation.RegionName = RegionNames.PageRegion;
         _navigation.ViewName = Consts.ViewNames.RegistrationPage;
         Navigate();
+    }
+
+    private void PasswordChangedCommandExecute(object parameter)
+    {
+        _password = _passwordBoxService.GetPassword(parameter);
+    }
+
+    private async void SignInCommandExecute()
+    {
+        try
+        {
+            // todo: web api
+            using var context = _application.GetContainer().Resolve<AppDbContext>();
+            var user = await context.Users.FirstOrDefaultAsync(x => x.Login == Login && x.Password == _password)
+                ?? throw new InvalidOperationException(ExceptionMessage);
+
+            _navigation.RegionName = RegionNames.PageRegion;
+            _navigation.ViewName = Consts.ViewNames.ItemsPage;
+            Navigate();
+        }
+        catch (Exception ex)
+        {
+            ShowExceptionDialog(ex);
+        }
     }
 }
