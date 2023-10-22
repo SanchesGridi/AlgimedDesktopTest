@@ -15,6 +15,7 @@ public abstract class PageViewModel : ViewModelBase, INavigationAware
 
     public virtual void OnNavigatedTo(NavigationContext navigationContext)
     {
+        ClearSensitiveData();
     }
 
     public void OnNavigatedFrom(NavigationContext navigationContext)
@@ -22,4 +23,6 @@ public abstract class PageViewModel : ViewModelBase, INavigationAware
     }
 
     public bool IsNavigationTarget(NavigationContext navigationContext) => true;
+
+    protected abstract void ClearSensitiveData();
 }

@@ -29,6 +29,6 @@ public static class Consts
         public const string StepItemView = nameof(StepItemView);
         public const string RegistrationPage = nameof(RegistrationPage);
         public const string AuthorizationPage = nameof(AuthorizationPage);
-        public const string ItemsPage = nameof(ItemsPage); // not used yet
+        public const string ItemsPage = nameof(ItemsPage);
     }
 }

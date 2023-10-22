@@ -20,6 +20,7 @@ public class AuthorizationPageViewModel : PageViewModel
 {
     private const string TitleName = "Authorization";
     private const string ExceptionMessage = "Invalid login data!";
+    private const string ControlName = "authorization_password_box";
 
     private readonly IPasswordBoxService _passwordBoxService;
     private readonly IMapper _mapper;
@@ -56,6 +57,13 @@ public class AuthorizationPageViewModel : PageViewModel
     {
         base.OnNavigatedTo(navigationContext);
         _eventAggregator.GetEvent<WindowTitleEvent>().Publish(TitleName);
+    }
+
+    protected override void ClearSensitiveData()
+    {
+        Login = null;
+        _password = null;
+        _passwordBoxService.ClearPassword(_application.MainWindow, ControlName);
     }
 
     private void SignUpCommandExecute()

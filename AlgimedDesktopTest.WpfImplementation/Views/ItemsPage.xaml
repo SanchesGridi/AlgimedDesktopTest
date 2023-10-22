@@ -23,7 +23,8 @@
                     Margin="5" Padding="2.5"
                     MaxWidth="100"
                     HorizontalAlignment="Right"
-                    Content="Sign out"/>
+                    Content="Sign out"
+                    Command="{Binding SignOutCommand}"/>
             <Label DockPanel.Dock="Right"
                    Margin="5"
                    FontWeight="Bold"

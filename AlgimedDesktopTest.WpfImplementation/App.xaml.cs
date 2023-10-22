@@ -21,7 +21,7 @@ namespace AlgimedDesktopTest.WpfImplementation
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry
-                .RegisterSingleton<IStartPageOptionService, StartPageOptionService>()
+                .RegisterSingleton<IStartPageOptionService, StartPageOptionService>() // todo: store
                 .RegisterSingleton<IPasswordBoxService, PasswordBoxService>()
                 .RegisterAutoMapperInstance()
                 .RegisterAppDbContext();
@@ -49,13 +49,10 @@ namespace AlgimedDesktopTest.WpfImplementation
         protected override void OnInitialized()
         {
             // todo:
-            // registration
-            // authorization (WebApi)
             // excel loading
-            // store value [IStartPageOptionService]
             // wf - project
             // app loader project
-            var option = StartPageOption.Authorization;
+            var option = StartPageOption.Registration;
             var service = Container.Resolve<IStartPageOptionService>();
             service.Set(option);
 

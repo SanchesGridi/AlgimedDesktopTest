@@ -62,15 +62,14 @@
                     BorderThickness="1"
                     MaxHeight="35"
                     CornerRadius="10"
-                    Padding="0"
                     Opacity="0.5"
                     BorderBrush="Gray">
-                <PasswordBox x:Name="pwd"
+                <PasswordBox x:Name="authorization_password_box"
                              Style="{StaticResource Std_PasswordBox}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PasswordChanged">
                             <prism:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
-                                                       CommandParameter="{Binding ElementName=pwd}"/>
+                                                       CommandParameter="{Binding ElementName=authorization_password_box}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </PasswordBox>
