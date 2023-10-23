@@ -17,6 +17,8 @@ namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 
 public class ItemsPageViewModel : PageViewModel
 {
+    private const string TitleName = "Items management";
+
     private UserModel? _user;
     public UserModel? User
     {
@@ -38,7 +40,7 @@ public class ItemsPageViewModel : PageViewModel
     public override void OnNavigatedTo(NavigationContext navigationContext)
     {
         base.OnNavigatedTo(navigationContext);
-        _eventAggregator.GetEvent<WindowTitleEvent>().Publish("Items management");
+        _eventAggregator.GetEvent<WindowTitleEvent>().Publish(TitleName);
         User = navigationContext.Parameters.GetValue<UserModel>(Consts.Keys.UserKey);
     }
 
