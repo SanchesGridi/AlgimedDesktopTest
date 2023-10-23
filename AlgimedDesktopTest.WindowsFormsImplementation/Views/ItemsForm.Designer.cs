@@ -1,6 +1,8 @@
-﻿namespace AlgimedDesktopTest.WindowsFormsImplementation.Views;
+﻿using AlgimedDesktopTest.WindowsFormsImplementation.Views.Base;
 
-partial class ItemsForm
+namespace AlgimedDesktopTest.WindowsFormsImplementation.Views;
+
+partial class ItemsForm : BaseForm
 {
     /// <summary>
     /// Required designer variable.
@@ -95,6 +97,7 @@ partial class ItemsForm
         dataGrid_Modes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dataGrid_Modes.Size = new Size(1003, 385);
         dataGrid_Modes.TabIndex = 0;
+        dataGrid_Modes.RowHeaderMouseDoubleClick += UpdateModeRow;
         // 
         // idDataGridViewTextBoxColumn
         // 
