@@ -32,15 +32,14 @@ partial class ItemsForm
         itemsTabControl = new TabControl();
         tabPageModes = new TabPage();
         dataGrid_Modes = new DataGridView();
-        modeEntityBindingSource = new BindingSource(components);
-        tabPageSteps = new TabPage();
-        dataGrid_Steps = new DataGridView();
-        stepEntityBindingSource = new BindingSource(components);
         idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         nameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         maxBottleNumberDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         maxUsedTipsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         stepsDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+        modeEntityBindingSource = new BindingSource(components);
+        tabPageSteps = new TabPage();
+        dataGrid_Steps = new DataGridView();
         idDataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
         timerDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         destinationDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -49,6 +48,7 @@ partial class ItemsForm
         volumeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         modeIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         modeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+        stepEntityBindingSource = new BindingSource(components);
         itemsTabControl.SuspendLayout();
         tabPageModes.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGrid_Modes).BeginInit();
@@ -92,42 +92,9 @@ partial class ItemsForm
         dataGrid_Modes.Name = "dataGrid_Modes";
         dataGrid_Modes.RowHeadersWidth = 51;
         dataGrid_Modes.RowTemplate.Height = 29;
+        dataGrid_Modes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dataGrid_Modes.Size = new Size(1003, 385);
         dataGrid_Modes.TabIndex = 0;
-        // 
-        // modeEntityBindingSource
-        // 
-        modeEntityBindingSource.DataSource = typeof(Database.Entities.ModeEntity);
-        // 
-        // tabPageSteps
-        // 
-        tabPageSteps.Controls.Add(dataGrid_Steps);
-        tabPageSteps.Location = new Point(4, 29);
-        tabPageSteps.Name = "tabPageSteps";
-        tabPageSteps.Padding = new Padding(3);
-        tabPageSteps.Size = new Size(1009, 391);
-        tabPageSteps.TabIndex = 1;
-        tabPageSteps.Text = "Steps";
-        tabPageSteps.UseVisualStyleBackColor = true;
-        // 
-        // dataGrid_Steps
-        // 
-        dataGrid_Steps.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        dataGrid_Steps.AutoGenerateColumns = false;
-        dataGrid_Steps.BackgroundColor = SystemColors.Control;
-        dataGrid_Steps.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dataGrid_Steps.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn2, timerDataGridViewTextBoxColumn, destinationDataGridViewTextBoxColumn, speedDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, volumeDataGridViewTextBoxColumn, modeIdDataGridViewTextBoxColumn, modeDataGridViewTextBoxColumn });
-        dataGrid_Steps.DataSource = stepEntityBindingSource;
-        dataGrid_Steps.Location = new Point(3, 3);
-        dataGrid_Steps.Name = "dataGrid_Steps";
-        dataGrid_Steps.RowHeadersWidth = 51;
-        dataGrid_Steps.RowTemplate.Height = 29;
-        dataGrid_Steps.Size = new Size(1002, 385);
-        dataGrid_Steps.TabIndex = 0;
-        // 
-        // stepEntityBindingSource
-        // 
-        stepEntityBindingSource.DataSource = typeof(Database.Entities.StepEntity);
         // 
         // idDataGridViewTextBoxColumn
         // 
@@ -171,6 +138,37 @@ partial class ItemsForm
         stepsDataGridViewTextBoxColumn.ReadOnly = true;
         stepsDataGridViewTextBoxColumn.Visible = false;
         stepsDataGridViewTextBoxColumn.Width = 125;
+        // 
+        // modeEntityBindingSource
+        // 
+        modeEntityBindingSource.DataSource = typeof(Database.Entities.ModeEntity);
+        // 
+        // tabPageSteps
+        // 
+        tabPageSteps.Controls.Add(dataGrid_Steps);
+        tabPageSteps.Location = new Point(4, 29);
+        tabPageSteps.Name = "tabPageSteps";
+        tabPageSteps.Padding = new Padding(3);
+        tabPageSteps.Size = new Size(1009, 391);
+        tabPageSteps.TabIndex = 1;
+        tabPageSteps.Text = "Steps";
+        tabPageSteps.UseVisualStyleBackColor = true;
+        // 
+        // dataGrid_Steps
+        // 
+        dataGrid_Steps.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        dataGrid_Steps.AutoGenerateColumns = false;
+        dataGrid_Steps.BackgroundColor = SystemColors.Control;
+        dataGrid_Steps.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dataGrid_Steps.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn2, timerDataGridViewTextBoxColumn, destinationDataGridViewTextBoxColumn, speedDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, volumeDataGridViewTextBoxColumn, modeIdDataGridViewTextBoxColumn, modeDataGridViewTextBoxColumn });
+        dataGrid_Steps.DataSource = stepEntityBindingSource;
+        dataGrid_Steps.Location = new Point(3, 3);
+        dataGrid_Steps.Name = "dataGrid_Steps";
+        dataGrid_Steps.RowHeadersWidth = 51;
+        dataGrid_Steps.RowTemplate.Height = 29;
+        dataGrid_Steps.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dataGrid_Steps.Size = new Size(1002, 385);
+        dataGrid_Steps.TabIndex = 0;
         // 
         // idDataGridViewTextBoxColumn2
         // 
@@ -238,6 +236,10 @@ partial class ItemsForm
         modeDataGridViewTextBoxColumn.ReadOnly = true;
         modeDataGridViewTextBoxColumn.Visible = false;
         modeDataGridViewTextBoxColumn.Width = 125;
+        // 
+        // stepEntityBindingSource
+        // 
+        stepEntityBindingSource.DataSource = typeof(Database.Entities.StepEntity);
         // 
         // ItemsForm
         // 
