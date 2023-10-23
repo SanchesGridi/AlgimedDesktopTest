@@ -1,4 +1,5 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
+using AlgimedDesktopTest.Database.Utils;
 using AlgimedDesktopTest.WpfImplementation.Mapper.Profiles;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -26,10 +27,10 @@ public static class ContainerRegistryExtensions
         @this.Register<AppDbContext>(() =>
         {
             var builder = new DbContextOptionsBuilder<AppDbContext>()
-                .UseSqlite("Data Source=algimed_test_task.db")
+                .UseSqlite(Consts.ConnectionString)
                 .UseLazyLoadingProxies();
-            var context = new AppDbContext(builder.Options);
-            return context;
+
+            return new AppDbContext(builder.Options);
         });
 
         return @this;
