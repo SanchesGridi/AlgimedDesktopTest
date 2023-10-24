@@ -51,6 +51,7 @@ partial class ItemsForm : BaseForm
         modeIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         modeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         stepEntityBindingSource = new BindingSource(components);
+        labelForTips = new Label();
         itemsTabControl.SuspendLayout();
         tabPageModes.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGrid_Modes).BeginInit();
@@ -65,10 +66,10 @@ partial class ItemsForm : BaseForm
         itemsTabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         itemsTabControl.Controls.Add(tabPageModes);
         itemsTabControl.Controls.Add(tabPageSteps);
-        itemsTabControl.Location = new Point(33, 29);
+        itemsTabControl.Location = new Point(3, 119);
         itemsTabControl.Name = "itemsTabControl";
         itemsTabControl.SelectedIndex = 0;
-        itemsTabControl.Size = new Size(1017, 424);
+        itemsTabControl.Size = new Size(1074, 424);
         itemsTabControl.TabIndex = 0;
         // 
         // tabPageModes
@@ -77,7 +78,7 @@ partial class ItemsForm : BaseForm
         tabPageModes.Location = new Point(4, 29);
         tabPageModes.Name = "tabPageModes";
         tabPageModes.Padding = new Padding(3);
-        tabPageModes.Size = new Size(1009, 391);
+        tabPageModes.Size = new Size(1066, 391);
         tabPageModes.TabIndex = 0;
         tabPageModes.Text = "Modes";
         tabPageModes.UseVisualStyleBackColor = true;
@@ -95,7 +96,7 @@ partial class ItemsForm : BaseForm
         dataGrid_Modes.RowHeadersWidth = 51;
         dataGrid_Modes.RowTemplate.Height = 29;
         dataGrid_Modes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        dataGrid_Modes.Size = new Size(1003, 385);
+        dataGrid_Modes.Size = new Size(1060, 385);
         dataGrid_Modes.TabIndex = 0;
         dataGrid_Modes.RowHeaderMouseDoubleClick += UpdateModeRow;
         // 
@@ -152,7 +153,7 @@ partial class ItemsForm : BaseForm
         tabPageSteps.Location = new Point(4, 29);
         tabPageSteps.Name = "tabPageSteps";
         tabPageSteps.Padding = new Padding(3);
-        tabPageSteps.Size = new Size(1009, 391);
+        tabPageSteps.Size = new Size(1066, 391);
         tabPageSteps.TabIndex = 1;
         tabPageSteps.Text = "Steps";
         tabPageSteps.UseVisualStyleBackColor = true;
@@ -170,7 +171,7 @@ partial class ItemsForm : BaseForm
         dataGrid_Steps.RowHeadersWidth = 51;
         dataGrid_Steps.RowTemplate.Height = 29;
         dataGrid_Steps.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        dataGrid_Steps.Size = new Size(1002, 385);
+        dataGrid_Steps.Size = new Size(1057, 385);
         dataGrid_Steps.TabIndex = 0;
         // 
         // idDataGridViewTextBoxColumn2
@@ -244,11 +245,24 @@ partial class ItemsForm : BaseForm
         // 
         stepEntityBindingSource.DataSource = typeof(Database.Entities.StepEntity);
         // 
+        // labelForTips
+        // 
+        labelForTips.AutoSize = true;
+        labelForTips.BorderStyle = BorderStyle.Fixed3D;
+        labelForTips.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
+        labelForTips.ForeColor = Color.LimeGreen;
+        labelForTips.Location = new Point(3, 83);
+        labelForTips.Name = "labelForTips";
+        labelForTips.Size = new Size(464, 25);
+        labelForTips.TabIndex = 1;
+        labelForTips.Text = "for update row u can double click on row start (arrow) icon ";
+        // 
         // ItemsForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1082, 545);
+        Controls.Add(labelForTips);
         Controls.Add(itemsTabControl);
         Name = "ItemsForm";
         StartPosition = FormStartPosition.CenterScreen;
@@ -262,6 +276,7 @@ partial class ItemsForm : BaseForm
         ((System.ComponentModel.ISupportInitialize)dataGrid_Steps).EndInit();
         ((System.ComponentModel.ISupportInitialize)stepEntityBindingSource).EndInit();
         ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
@@ -293,4 +308,5 @@ partial class ItemsForm : BaseForm
     private DataGridViewTextBoxColumn volumeDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn modeIdDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn modeDataGridViewTextBoxColumn;
+    private Label labelForTips;
 }
