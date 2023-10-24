@@ -10,7 +10,7 @@ public partial class ItemsForm : BaseForm
 {
     private const int ModeIdIndex = 0;
     private const int StartModeIndex = 1;
-    private const int EndModeIndex = 4;
+    private const int EndModeIndex = 3;
 
     private readonly AppDbContext? _context = ContextFactory.Create();
 
@@ -63,10 +63,10 @@ public partial class ItemsForm : BaseForm
                     for (var index = StartModeIndex; index <= EndModeIndex; index++)
                     {
                         var propertyName = view.Columns[index].HeaderText;
-                        var propertyValue = row.Cells[index].Value;
+                        var propertyValue = row.Cells[index].EditedFormattedValue;
                         properties.Add(propertyName, propertyValue);
                     }
-                    var updated = ModeParser.Parse(properties, (int)id);
+                    var updated = ModeHelper.UpdateInMemory(properties, _context?.Modes.Find(id)!);
                     _context?.Modes.Update(updated);
                     await _context!.SaveChangesAsync();
                     LoadModes();

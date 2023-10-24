@@ -2,11 +2,10 @@
 
 namespace AlgimedDesktopTest.WindowsFormsImplementation.Internal.Parsers;
 
-public static class ModeParser
+public static class ModeHelper
 {
-    public static ModeEntity Parse(Dictionary<string, object> dictionary, int id) // id remove
+    public static ModeEntity UpdateInMemory(Dictionary<string, object> dictionary, ModeEntity mode)
     {
-        var mode = new ModeEntity { Id = id }; // pass old (tracking entity
         foreach (var item in dictionary)
         {
             if (item.Key == nameof(mode.Name))
@@ -15,15 +14,11 @@ public static class ModeParser
             }
             else if (item.Key == nameof(mode.MaxBottleNumber))
             {
-                mode.MaxBottleNumber = (int)item.Value;
+                mode.MaxBottleNumber = int.Parse(item.Value.ToString()!);
             }
             else if (item.Key == nameof(mode.MaxUsedTips))
             {
-                mode.MaxUsedTips = (int)item.Value;
-            }
-            else if (item.Key == nameof(mode.Steps))
-            {
-                mode.Steps = (ICollection<StepEntity>)item.Value;
+                mode.MaxUsedTips = int.Parse(item.Value.ToString()!);
             }
         }
         return mode;
