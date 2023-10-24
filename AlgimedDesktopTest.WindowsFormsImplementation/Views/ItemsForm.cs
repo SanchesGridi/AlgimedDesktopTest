@@ -1,5 +1,6 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
 using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Factories;
+using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Parsers;
 using AlgimedDesktopTest.WindowsFormsImplementation.Views.Base;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,21 +10,23 @@ public partial class ItemsForm : BaseForm
 {
     private const int ModeIdIndex = 0;
     private const int StartModeIndex = 1;
-    private const int EndModeIndex = 3;
+    private const int EndModeIndex = 4;
+
+    private readonly AppDbContext? _context = ContextFactory.Create();
 
     public ItemsForm() => InitializeComponent();
 
     #region form-methods
-    private void LoadModes(AppDbContext context)
+    private void LoadModes()
     {
-        context.Modes.Load();
-        dataGrid_Modes.DataSource = context.Modes.Local.ToBindingList();
+        _context?.Modes.Load();
+        dataGrid_Modes.DataSource = _context?.Modes.Local.ToBindingList();
     }
 
-    private void LoadSteps(AppDbContext context)
+    private void LoadSteps()
     {
-        context.Steps.Load();
-        dataGrid_Steps.DataSource = context.Steps.Local.ToBindingList();
+        _context?.Steps.Load();
+        dataGrid_Steps.DataSource = _context?.Steps.Local.ToBindingList();
     }
     #endregion
 
@@ -32,9 +35,8 @@ public partial class ItemsForm : BaseForm
     {
         try
         {
-            using var context = ContextFactory.Create();
-            LoadModes(context);
-            LoadSteps(context);
+            LoadModes();
+            LoadSteps();
         }
         catch (Exception ex)
         {
@@ -42,7 +44,7 @@ public partial class ItemsForm : BaseForm
         }
     }
 
-    private void UpdateModeRow(object sender, DataGridViewCellMouseEventArgs e)
+    private async void UpdateModeRow(object sender, DataGridViewCellMouseEventArgs e)
     {
         try
         {
@@ -56,17 +58,18 @@ public partial class ItemsForm : BaseForm
                 var row = view.Rows[e.RowIndex];
                 if (row != null)
                 {
-                    // TODO:
                     var id = row.Cells[ModeIdIndex].Value;
+                    var properties = new Dictionary<string, object>();
                     for (var index = StartModeIndex; index <= EndModeIndex; index++)
                     {
-                        // 1) add to collection (Dictionary) and map to entity
                         var propertyName = view.Columns[index].HeaderText;
                         var propertyValue = row.Cells[index].Value;
+                        properties.Add(propertyName, propertyValue);
                     }
-                    // 2) here is ready entity (id, and properties(Dictionary)
-                    // 3) update context row
-                    // 4) LoadModes(context)
+                    var updated = ModeParser.Parse(properties, (int)id);
+                    _context?.Modes.Update(updated);
+                    await _context!.SaveChangesAsync();
+                    LoadModes();
                 }
             }
         }
