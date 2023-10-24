@@ -1,5 +1,8 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
-using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Factories;
+using AlgimedDesktopTest.Database.Entities;
+using AlgimedDesktopTest.Database.Entities.Base;
+using AlgimedDesktopTest.Database.Factories;
+using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Models;
 using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Parsers;
 using AlgimedDesktopTest.WindowsFormsImplementation.Views.Base;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +11,12 @@ namespace AlgimedDesktopTest.WindowsFormsImplementation.Views;
 
 public partial class ItemsForm : BaseForm
 {
-    private const int ModeIdIndex = 0;
-    private const int StartModeIndex = 1;
-    private const int EndModeIndex = 3;
+    private const int IdIndex = 0;
+    private const int StartIndex = 1;
+    private const int ModeEndIndex = 3;
+    private const int StepEndIndex = 6;
+    private const string ModesTag = "Modes";
+    private const string StepsTag = "Steps";
 
     private readonly AppDbContext? _context = ContextFactory.Create();
 
@@ -28,6 +34,30 @@ public partial class ItemsForm : BaseForm
         _context?.Steps.Load();
         dataGrid_Steps.DataSource = _context?.Steps.Local.ToBindingList();
     }
+
+    private async Task UpdateRowAsync<TEntity>(DataGridViewRow row, ManagedIndexesModel indexes)
+        where TEntity : class, IBaseEntity<int>
+    {
+        var id = row.Cells[indexes.Id].Value;
+        var properties = new Dictionary<string, object>();
+        for (var index = indexes.Start; index <= indexes.End; index++)
+        {
+            var propertyName = row.Cells[index].OwningColumn.HeaderText;
+            var propertyValue = row.Cells[index].EditedFormattedValue;
+            properties.Add(propertyName, propertyValue);
+        }
+        var updated = EntityHelper.UpdateInMemory(properties, _context?.Set<TEntity>().Find(id)!);
+        _context?.Set<TEntity>().Update(updated!);
+        await _context!.SaveChangesAsync();
+        if (typeof(TEntity) == typeof(ModeEntity))
+        {
+            LoadModes();
+        }
+        else if (typeof(TEntity) == typeof(StepEntity))
+        {
+            LoadSteps();
+        }
+    }
     #endregion
 
     #region event-methods
@@ -44,7 +74,7 @@ public partial class ItemsForm : BaseForm
         }
     }
 
-    private async void UpdateModeRow(object sender, DataGridViewCellMouseEventArgs e)
+    private async void UpdateRow(object sender, DataGridViewCellMouseEventArgs e)
     {
         try
         {
@@ -58,18 +88,17 @@ public partial class ItemsForm : BaseForm
                 var row = view.Rows[e.RowIndex];
                 if (row != null)
                 {
-                    var id = row.Cells[ModeIdIndex].Value;
-                    var properties = new Dictionary<string, object>();
-                    for (var index = StartModeIndex; index <= EndModeIndex; index++)
+                    var indexes = new ManagedIndexesModel();
+                    if (view.Tag.ToString() == ModesTag)
                     {
-                        var propertyName = view.Columns[index].HeaderText;
-                        var propertyValue = row.Cells[index].EditedFormattedValue;
-                        properties.Add(propertyName, propertyValue);
+                        indexes.Set(IdIndex, StartIndex, ModeEndIndex);
+                        await UpdateRowAsync<ModeEntity>(row, indexes);
                     }
-                    var updated = ModeHelper.UpdateInMemory(properties, _context?.Modes.Find(id)!);
-                    _context?.Modes.Update(updated);
-                    await _context!.SaveChangesAsync();
-                    LoadModes();
+                    else if (view.Tag.ToString() == StepsTag)
+                    {
+                        indexes.Set(IdIndex, StartIndex, StepEndIndex);
+                        await UpdateRowAsync<StepEntity>(row, indexes);
+                    }
                 }
             }
         }

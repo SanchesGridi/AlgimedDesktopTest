@@ -7,7 +7,7 @@ namespace AlgimedDesktopTest.WpfImplementation.Mapper.Profiles.Base;
 
 public abstract class DbEntryProfile<TModel, TEntity> : Profile
     where TModel : DbEntryModel
-    where TEntity : IEntityBase<int>
+    where TEntity : IBaseEntity<int>
 {
     public DbEntryProfile(Func<int, TModel> constructor)
     {

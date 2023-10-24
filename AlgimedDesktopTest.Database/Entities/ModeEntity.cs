@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AlgimedDesktopTest.Database.Entities;
 
 [Table("Modes")]
-public class ModeEntity : IEntityBase<int>
+public class ModeEntity : IBaseEntity<int>
 {
     public int Id { get; set; }
     public string? Name { get; set; }

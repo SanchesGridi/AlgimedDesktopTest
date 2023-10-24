@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AlgimedDesktopTest.Database.Entities;
 
 [Table("Parameters")]
-public class ParameterEntity : IEntityBase<int>
+public class ParameterEntity : IBaseEntity<int>
 {
     public int Id { get; set; }
     public string? Name { get; set; }

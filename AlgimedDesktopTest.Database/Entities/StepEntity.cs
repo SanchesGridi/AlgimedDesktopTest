@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AlgimedDesktopTest.Database.Entities;
 
 [Table("Steps")]
-public class StepEntity : IEntityBase<int>
+public class StepEntity : IBaseEntity<int>
 {
     public int Id { get; set; }
     public double Timer { get; set; }

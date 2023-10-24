@@ -98,7 +98,8 @@ partial class ItemsForm : BaseForm
         dataGrid_Modes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dataGrid_Modes.Size = new Size(1060, 385);
         dataGrid_Modes.TabIndex = 0;
-        dataGrid_Modes.RowHeaderMouseDoubleClick += UpdateModeRow;
+        dataGrid_Modes.Tag = "Modes";
+        dataGrid_Modes.RowHeaderMouseDoubleClick += UpdateRow;
         // 
         // idDataGridViewTextBoxColumn
         // 
@@ -173,6 +174,8 @@ partial class ItemsForm : BaseForm
         dataGrid_Steps.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dataGrid_Steps.Size = new Size(1057, 385);
         dataGrid_Steps.TabIndex = 0;
+        dataGrid_Steps.Tag = "Steps";
+        dataGrid_Steps.RowHeaderMouseDoubleClick += UpdateRow;
         // 
         // idDataGridViewTextBoxColumn2
         // 

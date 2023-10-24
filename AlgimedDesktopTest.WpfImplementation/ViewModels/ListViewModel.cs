@@ -243,7 +243,7 @@ public class ListViewModel : ViewModelBase
 
     private async Task RemoveEntryAsync<TItem, TEntity>(TItem selectedEntry, ObservableCollection<TItem> storage)
         where TItem : DbEntryModel
-        where TEntity : class, IEntityBase<int>
+        where TEntity : class, IBaseEntity<int>
     {
         if (selectedEntry != null)
         {

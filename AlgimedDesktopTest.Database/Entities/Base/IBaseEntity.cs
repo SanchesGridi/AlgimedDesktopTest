@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AlgimedDesktopTest.Database.Entities.Base;
 
-public interface IEntityBase<TAny>
+public interface IBaseEntity<TAny>
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public TAny Id { get; set; }

@@ -2,7 +2,7 @@
 using AlgimedDesktopTest.Database.Utils;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlgimedDesktopTest.WindowsFormsImplementation.Internal.Factories;
+namespace AlgimedDesktopTest.Database.Factories;
 
 public static class ContextFactory
 {

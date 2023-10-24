@@ -1,4 +1,6 @@
-﻿using AlgimedDesktopTest.Shared.Devices.Classes;
+﻿using AlgimedDesktopTest.Database.Contexts;
+using AlgimedDesktopTest.Database.Factories;
+using AlgimedDesktopTest.Shared.Devices.Classes;
 using AlgimedDesktopTest.Shared.Devices.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
 using AlgimedDesktopTest.WpfImplementation.Services.Classes;
@@ -24,8 +26,8 @@ namespace AlgimedDesktopTest.WpfImplementation
             containerRegistry
                 .RegisterSingleton<IDeviceService, DeviceService>()
                 .RegisterSingleton<IPasswordBoxService, PasswordBoxService>()
-                .RegisterAutoMapperInstance()
-                .RegisterAppDbContext();
+                .Register<AppDbContext>(() => ContextFactory.Create())
+                .RegisterAutoMapperInstance();
 
             containerRegistry.RegisterDialog<ExceptionDialog, ExceptionDialogViewModel>(Consts.Dialogs.ExceptionDialog);
 

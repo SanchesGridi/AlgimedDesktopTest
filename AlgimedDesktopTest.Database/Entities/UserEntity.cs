@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace AlgimedDesktopTest.Database.Entities;
 
 [Table("Users"), Index(nameof(Login), IsUnique = true, Name = "INDEX_LOGIN_IS_UNIQUE")]
-public class UserEntity : IEntityBase<int>
+public class UserEntity : IBaseEntity<int>
 {
     public int Id { get; set; }
     public string? FirstName { get; set; }
