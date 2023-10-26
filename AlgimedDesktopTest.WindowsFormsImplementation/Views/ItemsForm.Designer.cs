@@ -52,6 +52,8 @@ partial class ItemsForm : BaseForm
         modeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
         stepEntityBindingSource = new BindingSource(components);
         labelForTips = new Label();
+        addItemButton = new Button();
+        removeItemButton = new Button();
         itemsTabControl.SuspendLayout();
         tabPageModes.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGrid_Modes).BeginInit();
@@ -92,6 +94,7 @@ partial class ItemsForm : BaseForm
         dataGrid_Modes.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nameDataGridViewTextBoxColumn, maxBottleNumberDataGridViewTextBoxColumn, maxUsedTipsDataGridViewTextBoxColumn, stepsDataGridViewTextBoxColumn });
         dataGrid_Modes.DataSource = modeEntityBindingSource;
         dataGrid_Modes.Location = new Point(3, 3);
+        dataGrid_Modes.MultiSelect = false;
         dataGrid_Modes.Name = "dataGrid_Modes";
         dataGrid_Modes.RowHeadersWidth = 51;
         dataGrid_Modes.RowTemplate.Height = 29;
@@ -168,6 +171,7 @@ partial class ItemsForm : BaseForm
         dataGrid_Steps.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn2, timerDataGridViewTextBoxColumn, destinationDataGridViewTextBoxColumn, speedDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, volumeDataGridViewTextBoxColumn, modeIdDataGridViewTextBoxColumn, modeDataGridViewTextBoxColumn });
         dataGrid_Steps.DataSource = stepEntityBindingSource;
         dataGrid_Steps.Location = new Point(3, 3);
+        dataGrid_Steps.MultiSelect = false;
         dataGrid_Steps.Name = "dataGrid_Steps";
         dataGrid_Steps.RowHeadersWidth = 51;
         dataGrid_Steps.RowTemplate.Height = 29;
@@ -260,11 +264,32 @@ partial class ItemsForm : BaseForm
         labelForTips.TabIndex = 1;
         labelForTips.Text = "for update row u can double click on row start (arrow) icon ";
         // 
+        // addItemButton
+        // 
+        addItemButton.Location = new Point(494, 79);
+        addItemButton.Name = "addItemButton";
+        addItemButton.Size = new Size(175, 29);
+        addItemButton.TabIndex = 2;
+        addItemButton.Text = "Add";
+        addItemButton.UseVisualStyleBackColor = true;
+        // 
+        // removeItemButton
+        // 
+        removeItemButton.Location = new Point(675, 79);
+        removeItemButton.Name = "removeItemButton";
+        removeItemButton.Size = new Size(175, 29);
+        removeItemButton.TabIndex = 3;
+        removeItemButton.Text = "Remove";
+        removeItemButton.UseVisualStyleBackColor = true;
+        removeItemButton.Click += RemoveRow;
+        // 
         // ItemsForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1082, 545);
+        Controls.Add(removeItemButton);
+        Controls.Add(addItemButton);
         Controls.Add(labelForTips);
         Controls.Add(itemsTabControl);
         Name = "ItemsForm";
@@ -312,4 +337,6 @@ partial class ItemsForm : BaseForm
     private DataGridViewTextBoxColumn modeIdDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn modeDataGridViewTextBoxColumn;
     private Label labelForTips;
+    private Button addItemButton;
+    private Button removeItemButton;
 }

@@ -15,8 +15,8 @@ public partial class ItemsForm : BaseForm
     private const int StartIndex = 1;
     private const int ModeEndIndex = 3;
     private const int StepEndIndex = 6;
-    private const string ModesTag = "Modes";
-    private const string StepsTag = "Steps";
+    private const string Modes = "Modes";
+    private const string Steps = "Steps";
 
     private readonly AppDbContext? _context = ContextFactory.Create();
 
@@ -58,6 +58,23 @@ public partial class ItemsForm : BaseForm
             LoadSteps();
         }
     }
+
+    private async Task RemoveRowAsync<TEntity>(DataGridView view)
+        where TEntity : class, IBaseEntity<int>
+    {
+        if (view.SelectedRows.Count > 0)
+        {
+            var row = view.SelectedRows[0];
+            var emptyRowIndex = view.RowCount - 1;
+            if (row.Index != emptyRowIndex)
+            {
+                var id = row.Cells[IdIndex].Value;
+                var entity = await _context?.Set<TEntity>().FirstAsync(x => x.Id == (int)id)!;
+                _context?.Set<TEntity>().Remove(entity);
+                await _context!.SaveChangesAsync();
+            }
+        }
+    }
     #endregion
 
     #region event-methods
@@ -89,17 +106,36 @@ public partial class ItemsForm : BaseForm
                 if (row != null)
                 {
                     var indexes = new ManagedIndexesModel();
-                    if (view.Tag.ToString() == ModesTag)
+                    if (view.Tag.ToString() == Modes)
                     {
                         indexes.Set(IdIndex, StartIndex, ModeEndIndex);
                         await UpdateRowAsync<ModeEntity>(row, indexes);
                     }
-                    else if (view.Tag.ToString() == StepsTag)
+                    else if (view.Tag.ToString() == Steps)
                     {
                         indexes.Set(IdIndex, StartIndex, StepEndIndex);
                         await UpdateRowAsync<StepEntity>(row, indexes);
                     }
                 }
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowExceptionDialog(ex);
+        }
+    }
+
+    private async void RemoveRow(object sender, EventArgs e)
+    {
+        try
+        {
+            if (itemsTabControl.SelectedTab.Text == Modes)
+            {
+                await RemoveRowAsync<ModeEntity>(dataGrid_Modes);
+            }
+            else if (itemsTabControl.SelectedTab.Text == Steps)
+            {
+                await RemoveRowAsync<StepEntity>(dataGrid_Steps);
             }
         }
         catch (Exception ex)
