@@ -4,12 +4,12 @@ using AlgimedDesktopTest.Database.Entities.Base;
 using AlgimedDesktopTest.Database.Factories;
 using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Models;
 using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Parsers;
-using AlgimedDesktopTest.WindowsFormsImplementation.Views.Base;
+using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlgimedDesktopTest.WindowsFormsImplementation.Views;
 
-public partial class ItemsForm : BaseForm
+public partial class ItemsForm : Form
 {
     private const int IdIndex = 0;
     private const int StartIndex = 1;
@@ -87,7 +87,7 @@ public partial class ItemsForm : BaseForm
         }
         catch (Exception ex)
         {
-            ShowExceptionDialog(ex);
+            Dialogs.ShowExceptionDialog(ex);
         }
     }
 
@@ -121,7 +121,7 @@ public partial class ItemsForm : BaseForm
         }
         catch (Exception ex)
         {
-            ShowExceptionDialog(ex);
+            Dialogs.ShowExceptionDialog(ex);
         }
     }
 
@@ -140,7 +140,26 @@ public partial class ItemsForm : BaseForm
         }
         catch (Exception ex)
         {
-            ShowExceptionDialog(ex);
+            Dialogs.ShowExceptionDialog(ex);
+        }
+    }
+
+    private void AddRow(object sender, EventArgs e)
+    {
+        try
+        {
+            if (itemsTabControl.SelectedTab.Text == Modes)
+            {
+            }
+            else if (itemsTabControl.SelectedTab.Text == Steps)
+            {
+            }
+            var form = new Form();
+            var result = form.ShowDialog(); //
+        }
+        catch (Exception ex)
+        {
+            Dialogs.ShowExceptionDialog(ex);
         }
     }
     #endregion

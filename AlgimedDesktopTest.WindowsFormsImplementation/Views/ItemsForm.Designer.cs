@@ -1,8 +1,6 @@
-﻿using AlgimedDesktopTest.WindowsFormsImplementation.Views.Base;
+﻿namespace AlgimedDesktopTest.WindowsFormsImplementation.Views;
 
-namespace AlgimedDesktopTest.WindowsFormsImplementation.Views;
-
-partial class ItemsForm : BaseForm
+partial class ItemsForm : Form
 {
     /// <summary>
     /// Required designer variable.
