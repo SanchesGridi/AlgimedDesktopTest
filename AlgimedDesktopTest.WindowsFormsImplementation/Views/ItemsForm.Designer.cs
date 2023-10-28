@@ -66,19 +66,21 @@ partial class ItemsForm : Form
         itemsTabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         itemsTabControl.Controls.Add(tabPageModes);
         itemsTabControl.Controls.Add(tabPageSteps);
-        itemsTabControl.Location = new Point(3, 119);
+        itemsTabControl.Location = new Point(3, 89);
+        itemsTabControl.Margin = new Padding(3, 2, 3, 2);
         itemsTabControl.Name = "itemsTabControl";
         itemsTabControl.SelectedIndex = 0;
-        itemsTabControl.Size = new Size(1074, 424);
+        itemsTabControl.Size = new Size(940, 318);
         itemsTabControl.TabIndex = 0;
         // 
         // tabPageModes
         // 
         tabPageModes.Controls.Add(dataGrid_Modes);
-        tabPageModes.Location = new Point(4, 29);
+        tabPageModes.Location = new Point(4, 24);
+        tabPageModes.Margin = new Padding(3, 2, 3, 2);
         tabPageModes.Name = "tabPageModes";
-        tabPageModes.Padding = new Padding(3);
-        tabPageModes.Size = new Size(1066, 391);
+        tabPageModes.Padding = new Padding(3, 2, 3, 2);
+        tabPageModes.Size = new Size(932, 290);
         tabPageModes.TabIndex = 0;
         tabPageModes.Text = "Modes";
         tabPageModes.UseVisualStyleBackColor = true;
@@ -91,13 +93,14 @@ partial class ItemsForm : Form
         dataGrid_Modes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dataGrid_Modes.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nameDataGridViewTextBoxColumn, maxBottleNumberDataGridViewTextBoxColumn, maxUsedTipsDataGridViewTextBoxColumn, stepsDataGridViewTextBoxColumn });
         dataGrid_Modes.DataSource = modeEntityBindingSource;
-        dataGrid_Modes.Location = new Point(3, 3);
+        dataGrid_Modes.Location = new Point(3, 2);
+        dataGrid_Modes.Margin = new Padding(3, 2, 3, 2);
         dataGrid_Modes.MultiSelect = false;
         dataGrid_Modes.Name = "dataGrid_Modes";
         dataGrid_Modes.RowHeadersWidth = 51;
         dataGrid_Modes.RowTemplate.Height = 29;
         dataGrid_Modes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        dataGrid_Modes.Size = new Size(1060, 385);
+        dataGrid_Modes.Size = new Size(928, 289);
         dataGrid_Modes.TabIndex = 0;
         dataGrid_Modes.Tag = "Modes";
         dataGrid_Modes.RowHeaderMouseDoubleClick += UpdateRow;
@@ -152,10 +155,11 @@ partial class ItemsForm : Form
         // tabPageSteps
         // 
         tabPageSteps.Controls.Add(dataGrid_Steps);
-        tabPageSteps.Location = new Point(4, 29);
+        tabPageSteps.Location = new Point(4, 24);
+        tabPageSteps.Margin = new Padding(3, 2, 3, 2);
         tabPageSteps.Name = "tabPageSteps";
-        tabPageSteps.Padding = new Padding(3);
-        tabPageSteps.Size = new Size(1066, 391);
+        tabPageSteps.Padding = new Padding(3, 2, 3, 2);
+        tabPageSteps.Size = new Size(932, 290);
         tabPageSteps.TabIndex = 1;
         tabPageSteps.Text = "Steps";
         tabPageSteps.UseVisualStyleBackColor = true;
@@ -168,13 +172,14 @@ partial class ItemsForm : Form
         dataGrid_Steps.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dataGrid_Steps.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn2, timerDataGridViewTextBoxColumn, destinationDataGridViewTextBoxColumn, speedDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, volumeDataGridViewTextBoxColumn, modeIdDataGridViewTextBoxColumn, modeDataGridViewTextBoxColumn });
         dataGrid_Steps.DataSource = stepEntityBindingSource;
-        dataGrid_Steps.Location = new Point(3, 3);
+        dataGrid_Steps.Location = new Point(3, 2);
+        dataGrid_Steps.Margin = new Padding(3, 2, 3, 2);
         dataGrid_Steps.MultiSelect = false;
         dataGrid_Steps.Name = "dataGrid_Steps";
         dataGrid_Steps.RowHeadersWidth = 51;
         dataGrid_Steps.RowTemplate.Height = 29;
         dataGrid_Steps.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        dataGrid_Steps.Size = new Size(1057, 385);
+        dataGrid_Steps.Size = new Size(925, 289);
         dataGrid_Steps.TabIndex = 0;
         dataGrid_Steps.Tag = "Steps";
         dataGrid_Steps.RowHeaderMouseDoubleClick += UpdateRow;
@@ -256,26 +261,29 @@ partial class ItemsForm : Form
         labelForTips.BorderStyle = BorderStyle.Fixed3D;
         labelForTips.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
         labelForTips.ForeColor = Color.LimeGreen;
-        labelForTips.Location = new Point(3, 83);
+        labelForTips.Location = new Point(3, 62);
         labelForTips.Name = "labelForTips";
-        labelForTips.Size = new Size(464, 25);
+        labelForTips.Size = new Size(373, 21);
         labelForTips.TabIndex = 1;
         labelForTips.Text = "for update row u can double click on row start (arrow) icon ";
         // 
         // addItemButton
         // 
-        addItemButton.Location = new Point(494, 79);
+        addItemButton.Location = new Point(432, 59);
+        addItemButton.Margin = new Padding(3, 2, 3, 2);
         addItemButton.Name = "addItemButton";
-        addItemButton.Size = new Size(175, 29);
+        addItemButton.Size = new Size(153, 22);
         addItemButton.TabIndex = 2;
         addItemButton.Text = "Add";
         addItemButton.UseVisualStyleBackColor = true;
+        addItemButton.Click += AddRow;
         // 
         // removeItemButton
         // 
-        removeItemButton.Location = new Point(675, 79);
+        removeItemButton.Location = new Point(591, 59);
+        removeItemButton.Margin = new Padding(3, 2, 3, 2);
         removeItemButton.Name = "removeItemButton";
-        removeItemButton.Size = new Size(175, 29);
+        removeItemButton.Size = new Size(153, 22);
         removeItemButton.TabIndex = 3;
         removeItemButton.Text = "Remove";
         removeItemButton.UseVisualStyleBackColor = true;
@@ -283,13 +291,14 @@ partial class ItemsForm : Form
         // 
         // ItemsForm
         // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(1082, 545);
+        ClientSize = new Size(947, 409);
         Controls.Add(removeItemButton);
         Controls.Add(addItemButton);
         Controls.Add(labelForTips);
         Controls.Add(itemsTabControl);
+        Margin = new Padding(3, 2, 3, 2);
         Name = "ItemsForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Items management";

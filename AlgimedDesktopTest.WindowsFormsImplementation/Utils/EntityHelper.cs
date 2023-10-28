@@ -1,7 +1,7 @@
 ﻿using AlgimedDesktopTest.Database.Entities;
 using AlgimedDesktopTest.Database.Entities.Base;
 
-namespace AlgimedDesktopTest.WindowsFormsImplementation.Internal.Parsers;
+namespace AlgimedDesktopTest.WindowsFormsImplementation.Utils;
 
 public static class EntityHelper
 {

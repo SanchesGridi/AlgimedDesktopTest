@@ -1,4 +1,4 @@
-﻿namespace AlgimedDesktopTest.WindowsFormsImplementation.Internal.Models;
+﻿namespace AlgimedDesktopTest.WindowsFormsImplementation.Models;
 
 public class ManagedIndexesModel
 {

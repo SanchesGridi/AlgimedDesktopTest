@@ -1,4 +1,4 @@
-﻿namespace AlgimedDesktopTest.WindowsFormsImplementation.Internal.Utils;
+﻿namespace AlgimedDesktopTest.WindowsFormsImplementation.Utils;
 
 public static class Dialogs
 {

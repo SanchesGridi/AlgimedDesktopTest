@@ -2,9 +2,8 @@
 using AlgimedDesktopTest.Database.Entities;
 using AlgimedDesktopTest.Database.Entities.Base;
 using AlgimedDesktopTest.Database.Factories;
-using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Models;
-using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Parsers;
-using AlgimedDesktopTest.WindowsFormsImplementation.Internal.Utils;
+using AlgimedDesktopTest.WindowsFormsImplementation.Models;
+using AlgimedDesktopTest.WindowsFormsImplementation.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlgimedDesktopTest.WindowsFormsImplementation.Views;
@@ -144,18 +143,34 @@ public partial class ItemsForm : Form
         }
     }
 
-    private void AddRow(object sender, EventArgs e)
+    private async void AddRow(object sender, EventArgs e)
     {
         try
         {
             if (itemsTabControl.SelectedTab.Text == Modes)
             {
+                var form = new ModeForm();
+                var dialogResult = form.ShowDialog(this);
+                if (dialogResult == DialogResult.OK)
+                {
+                    var item = form.GetItem();
+                    await _context!.Modes.AddAsync(item);
+                    await _context!.SaveChangesAsync();
+                }
+                form.Dispose();
             }
             else if (itemsTabControl.SelectedTab.Text == Steps)
             {
+                var form = new StepForm(await _context!.Modes.Select(x => x.Id).ToListAsync());
+                var dialogResult = form.ShowDialog(this);
+                if (dialogResult == DialogResult.OK)
+                {
+                    var item = form.GetItem();
+                    await _context!.Steps.AddAsync(item);
+                    await _context!.SaveChangesAsync();
+                }
+                form.Dispose();
             }
-            var form = new Form();
-            var result = form.ShowDialog(); //
         }
         catch (Exception ex)
         {
