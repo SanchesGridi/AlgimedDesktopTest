@@ -48,7 +48,7 @@
                             <GridView.Columns>
                                 <GridViewColumn Width="100">
                                     <GridViewColumn.Header>
-                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Name: "/>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Name"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate DataType="m:ModeModel">
@@ -58,7 +58,7 @@
                                 </GridViewColumn>
                                 <GridViewColumn Width="100">
                                     <GridViewColumn.Header>
-                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Bottles: "/>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Bottles"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate DataType="m:ModeModel">
@@ -68,7 +68,7 @@
                                 </GridViewColumn>
                                 <GridViewColumn Width="100">
                                     <GridViewColumn.Header>
-                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Tips: "/>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Tips"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate DataType="m:ModeModel">
@@ -109,7 +109,7 @@
                             <GridView.Columns>
                                 <GridViewColumn Width="100">
                                     <GridViewColumn.Header>
-                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Destination: "/>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Destination"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate DataType="m:StepModel">
@@ -119,7 +119,7 @@
                                 </GridViewColumn>
                                 <GridViewColumn Width="100">
                                     <GridViewColumn.Header>
-                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Type: "/>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Type"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate DataType="m:StepModel">
@@ -129,7 +129,7 @@
                                 </GridViewColumn>
                                 <GridViewColumn Width="100">
                                     <GridViewColumn.Header>
-                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Timer: "/>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Timer"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate DataType="m:StepModel">
@@ -139,7 +139,7 @@
                                 </GridViewColumn>
                                 <GridViewColumn Width="100">
                                     <GridViewColumn.Header>
-                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Speed: "/>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Speed"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate DataType="m:StepModel">
@@ -149,11 +149,21 @@
                                 </GridViewColumn>
                                 <GridViewColumn Width="100">
                                     <GridViewColumn.Header>
-                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Volume: "/>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Volume"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate DataType="m:StepModel">
                                             <TextBlock Text="{Binding Volume}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="100">
+                                    <GridViewColumn.Header>
+                                        <TextBlock TextDecorations="Underline" FontWeight="Bold" Text="Mode ID"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="m:StepModel">
+                                            <TextBlock Text="{Binding ModeId}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

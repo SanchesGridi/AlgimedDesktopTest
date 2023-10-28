@@ -25,11 +25,19 @@
                     HorizontalAlignment="Right"
                     Content="Sign out"
                     Command="{Binding SignOutCommand}"/>
-            <Label DockPanel.Dock="Right"
-                   Margin="5"
-                   FontWeight="Bold"
-                   HorizontalAlignment="Right"
-                   Content="Profile:"/>
+            <TextBlock DockPanel.Dock="Right"
+                       Margin="5"
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right">
+                <TextBlock.Inlines>
+                    <Run Text="Profile: "/>
+                    <Run Foreground="Purple" Text="{Binding User.FirstName}"/>
+                    <Run Foreground="Purple" Text="{Binding User.LastName}"/>
+                    <Run Foreground="GreenYellow" Text="{Binding User.Login, StringFormat='(@{0})'}"/>
+                </TextBlock.Inlines>
+            </TextBlock>
         </DockPanel>
         <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static utils:RegionNames.ContentRegion}"/>
     </Grid>
