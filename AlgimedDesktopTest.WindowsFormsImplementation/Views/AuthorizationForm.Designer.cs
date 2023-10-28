@@ -103,6 +103,7 @@ partial class AuthorizationForm
         signUpButton.TabIndex = 6;
         signUpButton.Text = "Sign Up";
         signUpButton.UseVisualStyleBackColor = true;
+        signUpButton.Click += SignUp;
         // 
         // authorizationMessageLabel
         // 
@@ -120,7 +121,7 @@ partial class AuthorizationForm
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = SystemColors.ControlLight;
-        ClientSize = new Size(380, 316);
+        ClientSize = new Size(380, 307);
         Controls.Add(authorizationMessageLabel);
         Controls.Add(signUpButton);
         Controls.Add(questionLabel);

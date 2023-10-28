@@ -31,5 +31,12 @@ public partial class AuthorizationForm : Form
             Dialogs.ShowExceptionDialog(ex);
         }
     }
+
+    private void SignUp(object sender, EventArgs e)
+    {
+        var form = new RegistrationForm();
+        form.ShowDialog(this);
+        form.Dispose();
+    }
     #endregion
 }
