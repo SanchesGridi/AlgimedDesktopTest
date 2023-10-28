@@ -64,14 +64,10 @@ public partial class ItemsForm : Form
         if (view.SelectedRows.Count > 0)
         {
             var row = view.SelectedRows[0];
-            var emptyRowIndex = view.RowCount - 1;
-            if (row.Index != emptyRowIndex)
-            {
-                var id = row.Cells[IdIndex].Value;
-                var entity = await _context?.Set<TEntity>().FirstAsync(x => x.Id == (int)id)!;
-                _context?.Set<TEntity>().Remove(entity);
-                await _context!.SaveChangesAsync();
-            }
+            var id = row.Cells[IdIndex].Value;
+            var entity = await _context?.Set<TEntity>().FirstAsync(x => x.Id == (int)id)!;
+            _context?.Set<TEntity>().Remove(entity);
+            await _context!.SaveChangesAsync();
         }
     }
     #endregion
@@ -96,11 +92,6 @@ public partial class ItemsForm : Form
         {
             if (sender is DataGridView view)
             {
-                var emptyRowIndex = view.RowCount - 1;
-                if (e.RowIndex == emptyRowIndex)
-                {
-                    return;
-                }
                 var row = view.Rows[e.RowIndex];
                 if (row != null)
                 {
