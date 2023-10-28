@@ -8,6 +8,6 @@ public static class Program
     public static void Main()
     {
         ApplicationConfiguration.Initialize();
-        Application.Run(new ItemsForm());
+        Application.Run(new AuthorizationForm());
     }
 }

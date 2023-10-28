@@ -52,6 +52,8 @@ partial class ItemsForm : Form
         labelForTips = new Label();
         addItemButton = new Button();
         removeItemButton = new Button();
+        profileLabel = new Label();
+        userNameLabel = new Label();
         itemsTabControl.SuspendLayout();
         tabPageModes.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGrid_Modes).BeginInit();
@@ -291,11 +293,35 @@ partial class ItemsForm : Form
         removeItemButton.UseVisualStyleBackColor = true;
         removeItemButton.Click += RemoveRow;
         // 
+        // profileLabel
+        // 
+        profileLabel.AutoSize = true;
+        profileLabel.BorderStyle = BorderStyle.Fixed3D;
+        profileLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+        profileLabel.ForeColor = Color.LimeGreen;
+        profileLabel.Location = new Point(3, 33);
+        profileLabel.Name = "profileLabel";
+        profileLabel.Size = new Size(60, 21);
+        profileLabel.TabIndex = 4;
+        profileLabel.Text = "Profile:";
+        // 
+        // userNameLabel
+        // 
+        userNameLabel.AutoSize = true;
+        userNameLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+        userNameLabel.ForeColor = Color.Black;
+        userNameLabel.Location = new Point(61, 35);
+        userNameLabel.Name = "userNameLabel";
+        userNameLabel.Size = new Size(0, 19);
+        userNameLabel.TabIndex = 5;
+        // 
         // ItemsForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(947, 409);
+        Controls.Add(userNameLabel);
+        Controls.Add(profileLabel);
         Controls.Add(removeItemButton);
         Controls.Add(addItemButton);
         Controls.Add(labelForTips);
@@ -304,6 +330,7 @@ partial class ItemsForm : Form
         Name = "ItemsForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Items management";
+        FormClosed += OnFormClosed;
         Load += LoadDataSource;
         itemsTabControl.ResumeLayout(false);
         tabPageModes.ResumeLayout(false);
@@ -348,4 +375,6 @@ partial class ItemsForm : Form
     private Label labelForTips;
     private Button addItemButton;
     private Button removeItemButton;
+    private Label profileLabel;
+    private Label userNameLabel;
 }

@@ -17,9 +17,16 @@ public partial class ItemsForm : Form
     private const string Modes = "Modes";
     private const string Steps = "Steps";
 
-    private readonly AppDbContext? _context = ContextFactory.Create();
+    private readonly UserEntity _user;
+    private readonly AppDbContext? _context;
 
-    public ItemsForm() => InitializeComponent();
+    public ItemsForm(UserEntity user)
+    {
+        _user = user;
+        _context = ContextFactory.Create();
+
+        InitializeComponent();
+    }
 
     #region form-methods
     private void LoadModes()
@@ -77,6 +84,7 @@ public partial class ItemsForm : Form
     {
         try
         {
+            userNameLabel.Text = $"{_user.FirstName} {_user.LastName} (@{_user.Login})";
             LoadModes();
             LoadSteps();
         }
@@ -168,5 +176,8 @@ public partial class ItemsForm : Form
             Dialogs.ShowExceptionDialog(ex);
         }
     }
+
+    private void OnFormClosed(object sender, FormClosedEventArgs e) =>
+        Owner?.Dispose();
     #endregion
 }
