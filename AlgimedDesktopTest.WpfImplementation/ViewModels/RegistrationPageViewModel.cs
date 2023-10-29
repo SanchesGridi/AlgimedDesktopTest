@@ -117,7 +117,6 @@ public class RegistrationPageViewModel : PageViewModel
             else
             {
                 User!.Password = _password;
-                User!.CreatedAt = DateTime.Now;
 
                 await context.Users.AddAsync(_mapper.Map<UserEntity>(User));
                 await context.SaveChangesAsync();

@@ -37,6 +37,7 @@
             // 
             messageLabel.Dock = DockStyle.Top;
             messageLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            messageLabel.ForeColor = Color.Firebrick;
             messageLabel.Location = new Point(0, 0);
             messageLabel.Name = "messageLabel";
             messageLabel.Size = new Size(800, 44);

@@ -2,6 +2,8 @@
 using AlgimedDesktopTest.Database.Factories;
 using AlgimedDesktopTest.Shared.Devices.Classes;
 using AlgimedDesktopTest.Shared.Devices.Interfaces;
+using AlgimedDesktopTest.Shared.Excel.Classes;
+using AlgimedDesktopTest.Shared.Excel.Interfaces;
 using AlgimedDesktopTest.Shared.Services.Classes;
 using AlgimedDesktopTest.Shared.Services.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
@@ -26,13 +28,16 @@ namespace AlgimedDesktopTest.WpfImplementation
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry
+                .RegisterSingleton<IFileService, FileService>()
+                .RegisterSingleton<IExcelService, ExcelService>()
                 .RegisterSingleton<IDeviceService, DeviceService>()
                 .RegisterSingleton<IPasswordService, PasswordService>()
                 .RegisterSingleton<IPasswordBoxService, PasswordBoxService>()
                 .Register<AppDbContext>(() => ContextFactory.Create())
                 .RegisterAutoMapperInstance();
 
-            containerRegistry.RegisterDialog<ExceptionDialog, ExceptionDialogViewModel>(Consts.Dialogs.ExceptionDialog);
+            containerRegistry.RegisterDialog<DetailsDialog, DetailsDialogViewModel>(Consts.Dialogs.DetailsDialog);
+            containerRegistry.RegisterDialog<WarningDialog, WarningDialogViewModel>(Consts.Dialogs.WarningDialog);
 
             containerRegistry.RegisterForNavigation<MainWindow, MainWindowViewModel>();
             containerRegistry.RegisterForNavigation<RegistrationPage, RegistrationPageViewModel>();
@@ -42,14 +47,13 @@ namespace AlgimedDesktopTest.WpfImplementation
             containerRegistry.RegisterForNavigation<ModeItemView, ModeItemViewModel>();
             containerRegistry.RegisterForNavigation<StepItemView, StepItemViewModel>();
 
-            var regionManager = Container.Resolve<IRegionManager>();
-
-            regionManager.RegisterViewWithRegion(RegionNames.PageRegion, nameof(RegistrationPage));
-            regionManager.RegisterViewWithRegion(RegionNames.PageRegion, nameof(AuthorizationPage));
-            regionManager.RegisterViewWithRegion(RegionNames.PageRegion, nameof(ItemsPage));
-            regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, nameof(ListView));
-            regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, nameof(ModeItemView));
-            regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, nameof(StepItemView));
+            Container.Resolve<IRegionManager>()
+                .RegisterViewWithRegion(RegionNames.PageRegion, nameof(RegistrationPage))
+                .RegisterViewWithRegion(RegionNames.PageRegion, nameof(AuthorizationPage))
+                .RegisterViewWithRegion(RegionNames.PageRegion, nameof(ItemsPage))
+                .RegisterViewWithRegion(RegionNames.ContentRegion, nameof(ListView))
+                .RegisterViewWithRegion(RegionNames.ContentRegion, nameof(ModeItemView))
+                .RegisterViewWithRegion(RegionNames.ContentRegion, nameof(StepItemView));
         }
     }
 }

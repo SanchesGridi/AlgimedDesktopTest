@@ -14,7 +14,7 @@ public class UserEntity : IBaseEntity<int>
     [StringLength(255)]
     public string? Login { get; set; }
     public string? Password { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime LastLoginAt { get; set; }
 
     public virtual ICollection<ParameterEntity> Parameters { get; set; } = new List<ParameterEntity>();
 }

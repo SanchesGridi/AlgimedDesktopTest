@@ -9,7 +9,7 @@ public static class ContextFactory
     public static AppDbContext Create()
     {
         var builder = new DbContextOptionsBuilder<AppDbContext>()
-            .UseSqlite(Consts.ConnectionString)
+            .UseSqlite(Db.ConnectionString)
             .UseLazyLoadingProxies();
 
         return new (builder.Options);

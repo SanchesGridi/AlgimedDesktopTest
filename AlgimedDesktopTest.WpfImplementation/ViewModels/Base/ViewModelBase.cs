@@ -11,6 +11,8 @@ namespace AlgimedDesktopTest.WpfImplementation.ViewModels.Base;
 
 public abstract class ViewModelBase : BindableBase
 {
+    private const string DialogTitle = "Error Details";
+
     protected readonly IRegionManager _regionManager;
     protected readonly IEventAggregator _eventAggregator;
     protected readonly IDialogService _dialogService;
@@ -32,13 +34,12 @@ public abstract class ViewModelBase : BindableBase
     protected void ShowExceptionDialog(Exception ex, Action<IDialogResult>? exceptionCallback = null)
     {
         _dialogService.ShowDialog(
-            Consts.Dialogs.ExceptionDialog,
-            new DialogParameters
-            {
-                { Consts.Keys.TitleKey, "Error Details" },
+            Consts.Dialogs.DetailsDialog,
+            new DialogParameters {
+                { Consts.Keys.TitleKey, DialogTitle },
                 { Consts.Keys.DetailsKey, ex.Message }
             },
-            exceptionCallback != null ? exceptionCallback : x => { }
+            exceptionCallback != null ? exceptionCallback : _ => { }
         );
     }
 

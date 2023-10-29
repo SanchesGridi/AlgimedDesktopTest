@@ -34,11 +34,11 @@ public class UserModel : DbEntryModel
         set => SetProperty(ref _password, value);
     }
 
-    private DateTime _createdAt;
-    public DateTime CreatedAt
+    private DateTime _lastLoginAt;
+    public DateTime LastLoginAt
     {
-        get => _createdAt;
-        set => SetProperty(ref _createdAt, value);
+        get => _lastLoginAt;
+        set => SetProperty(ref _lastLoginAt, value);
     }
 
     private ObservableCollection<ParameterModel>? _parameters;

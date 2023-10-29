@@ -4,7 +4,7 @@ using Prism.Services.Dialogs;
 
 namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 
-public class ExceptionDialogViewModel : DialogViewModelBase
+public class DetailsDialogViewModel : DialogViewModelBase
 {
     private string? _details;
     public string? Details
@@ -17,6 +17,6 @@ public class ExceptionDialogViewModel : DialogViewModelBase
     {
         base.OnDialogOpened(parameters);
 
-        Details = parameters.GetValue<string>(Consts.Keys.DetailsKey);
+        Details = parameters.GetValue<string?>(Consts.Keys.DetailsKey);
     }
 }

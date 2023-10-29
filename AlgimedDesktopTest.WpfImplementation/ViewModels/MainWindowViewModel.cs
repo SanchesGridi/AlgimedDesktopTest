@@ -57,7 +57,7 @@ public class MainWindowViewModel : ViewModelBase
             var deviceId = _deviceService.GetId();
             using var context = _application.GetContainer().Resolve<AppDbContext>();
             var user = (await context.Parameters.Where(x => x.Name == Consts.Keys.DeviceKey && x.Value == deviceId)
-                .OrderByDescending(x => x.User!.CreatedAt).FirstOrDefaultAsync()
+                .OrderByDescending(x => x.User!.LastLoginAt).FirstOrDefaultAsync()
             )?.User;
 
             var defaultStartPage = Consts.ViewNames.AuthorizationPage;

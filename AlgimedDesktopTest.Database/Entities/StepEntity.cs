@@ -1,9 +1,10 @@
 ﻿using AlgimedDesktopTest.Database.Entities.Base;
+using AlgimedDesktopTest.Database.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlgimedDesktopTest.Database.Entities;
 
-[Table("Steps")]
+[Table(Db.Steps)]
 public class StepEntity : IBaseEntity<int>
 {
     public int Id { get; set; }

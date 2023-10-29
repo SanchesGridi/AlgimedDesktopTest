@@ -2,9 +2,9 @@
 
 namespace AlgimedDesktopTest.WpfImplementation.Views;
 
-public partial class ExceptionDialog : UserControl
+public partial class DetailsDialog : UserControl
 {
-    public ExceptionDialog()
+    public DetailsDialog()
     {
         InitializeComponent();
     }

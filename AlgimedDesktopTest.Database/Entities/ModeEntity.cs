@@ -1,9 +1,10 @@
 ﻿using AlgimedDesktopTest.Database.Entities.Base;
+using AlgimedDesktopTest.Database.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlgimedDesktopTest.Database.Entities;
 
-[Table("Modes")]
+[Table(Db.Modes)]
 public class ModeEntity : IBaseEntity<int>
 {
     public int Id { get; set; }

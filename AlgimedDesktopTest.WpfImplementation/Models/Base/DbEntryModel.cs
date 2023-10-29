@@ -6,7 +6,7 @@ public abstract class DbEntryModel : BindableBase
 {
     private readonly int _id;
 
-    public DbEntryModel(int id) => _id = id;
+    public int Id => _id;
 
-    public int GetId() => _id;
+    public DbEntryModel(int id) => _id = id;
 }

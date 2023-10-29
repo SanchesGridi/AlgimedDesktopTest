@@ -53,7 +53,7 @@ public class ItemsPageViewModel : PageViewModel
         try
         {
             using var context = _application.GetContainer().Resolve<AppDbContext>();
-            var user = await context.Users.FindAsync(User!.GetId());
+            var user = await context.Users.FindAsync(User!.Id);
             if (user != null)
             {
                 var page = Consts.ViewNames.AuthorizationPage;

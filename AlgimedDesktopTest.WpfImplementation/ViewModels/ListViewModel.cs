@@ -1,6 +1,9 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
 using AlgimedDesktopTest.Database.Entities;
 using AlgimedDesktopTest.Database.Entities.Base;
+using AlgimedDesktopTest.Database.Utils;
+using AlgimedDesktopTest.Shared.Excel.Interfaces;
+using AlgimedDesktopTest.Shared.Services.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Events;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
 using AlgimedDesktopTest.WpfImplementation.Models;
@@ -24,9 +27,14 @@ namespace AlgimedDesktopTest.WpfImplementation.ViewModels;
 
 public class ListViewModel : ViewModelBase
 {
+    private const string WarningDialogTitle = "Warning";
+    private const string DetailsDialogTitle = "Steps are skipped!";
+    private const string Details = "All modes was saved successfully, but steps are skipped!";
     private const string ExceptionMessage = "Please select an item!";
     private const int NewItemId = 0;
 
+    private readonly IFileService _fileService;
+    private readonly IExcelService _excelService;
     private readonly IMapper _mapper;
 
     private bool _initialized;
@@ -64,13 +72,18 @@ public class ListViewModel : ViewModelBase
     public DelegateCommand RemoveModeCommand { get; }
     public DelegateCommand<string> NavigateToStepCommand { get; }
     public DelegateCommand RemoveStepCommand { get; }
+    public DelegateCommand LoadFromXlsxCommand { get; }
 
     public ListViewModel(
         IRegionManager regionManager,
         IEventAggregator eventAggregator,
         IDialogService dialogService,
+        IFileService fileService,
+        IExcelService excelService,
         IMapper mapper) : base(regionManager, eventAggregator, dialogService)
     {
+        _fileService = fileService;
+        _excelService = excelService;
         _mapper = mapper;
 
         ListViewLoadedCommand = new(ListViewLoadedCommandExecute);
@@ -78,6 +91,7 @@ public class ListViewModel : ViewModelBase
         RemoveModeCommand = new(RemoveModeCommandExecute);
         NavigateToStepCommand = new(NavigateToStepCommandExecute);
         RemoveStepCommand = new(RemoveStepCommandExecute);
+        LoadFromXlsxCommand = new(LoadFromXlsxCommandExecute);
 
         _eventAggregator.GetEvent<ItemEvent<ModeModel>>().Subscribe(async x => await SubscribeItemAsync<ModeModel, ModeEntity>(x, Modes!));
         _eventAggregator.GetEvent<ItemEvent<StepModel>>().Subscribe(async x => await SubscribeItemAsync<StepModel, StepEntity>(x, Steps!));
@@ -108,7 +122,7 @@ public class ListViewModel : ViewModelBase
     {
         try
         {
-            static ModeModel InternalMapper(ModeModel selected) => new(selected.GetId())
+            static ModeModel InternalMapper(ModeModel selected) => new(selected.Id)
             {
                 Name = selected.Name,
                 MaxBottleNumber = selected.MaxBottleNumber,
@@ -139,7 +153,7 @@ public class ListViewModel : ViewModelBase
     {
         try
         {
-            static StepModel InternalMapper(StepModel selected) => new(selected.GetId())
+            static StepModel InternalMapper(StepModel selected) => new(selected.Id)
             {
                 Timer = selected.Timer,
                 Destination = selected.Destination,
@@ -151,7 +165,7 @@ public class ListViewModel : ViewModelBase
 
             var parameters = new NavigationParameters
             {
-                { Consts.Keys.IdsKey, Modes!.Select(x => x.GetId()).OrderBy(x => x).ToArray() }
+                { Consts.Keys.IdsKey, Modes!.Select(x => x.Id).OrderBy(x => x).ToArray() }
             };
             NavigateToView(
                 Consts.ViewNames.StepItemView, parameter, SelectedStep!, InternalMapper, () => new(NewItemId), parameters
@@ -173,6 +187,71 @@ public class ListViewModel : ViewModelBase
         {
             ShowExceptionDialog(ex);
         }
+    }
+
+    private async void LoadFromXlsxCommandExecute()
+    {
+        try
+        {
+            var path = _fileService.Browse();
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                // modes:
+                using var context = _application.GetContainer().Resolve<AppDbContext>();
+                var loadedModes = _excelService.LoadFromXlsx<ModeEntity>(
+                    new(Db.ModeMapper, Db.RowValidator) { Path = path, SheetName = Db.Modes, HeaderNames = Db.ModeHeaders }
+                );
+                await Db.ContextWrapper.SaveModesAsync(context, loadedModes);
+                await ReloadCollectionAsync<ModeModel, ModeEntity>(context, Modes!);
+
+                // steps:
+                var loadedSteps = _excelService.LoadFromXlsx<StepEntity>(
+                    new(Db.StepMapper, Db.RowValidator) { Path = path, SheetName = Db.Steps, HeaderNames = Db.StepHeaders }
+                );
+                var modeIds = await context.Modes.Select(x => x.Id).ToListAsync();
+                var excludedSteps = loadedSteps.Where(x => !modeIds.Contains((int)x.ModeId!)).ToList();
+                var includedSteps = loadedSteps.Where(x => modeIds.Contains((int)x.ModeId!)).ToList();
+                if (excludedSteps.Count > 0)
+                {
+                    ShowWarningDialog(_mapper.Map<ObservableCollection<StepModel>>(excludedSteps), context, includedSteps);
+                }
+                else
+                {
+                    await Db.ContextWrapper.SaveStepsAsync(context, loadedSteps);
+                }
+                await ReloadCollectionAsync<StepModel, StepEntity>(context, Steps!);
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowExceptionDialog(ex);
+        }
+    }
+
+    private void ShowWarningDialog(ObservableCollection<StepModel> excludedSteps, AppDbContext context, List<StepEntity> includedSteps)
+    {
+        _dialogService.ShowDialog(
+            Consts.Dialogs.WarningDialog,
+            new DialogParameters {
+                { Consts.Keys.TitleKey, WarningDialogTitle },
+                { Consts.Keys.StepsKey, excludedSteps }
+            },
+            async x =>
+            {
+                if (x.Result == ButtonResult.OK)
+                {
+                    await Db.ContextWrapper.SaveStepsAsync(context, includedSteps);
+                }
+                else
+                {
+                    _dialogService.ShowDialog(Consts.Dialogs.DetailsDialog, new DialogParameters
+                    {
+                        { Consts.Keys.TitleKey, DetailsDialogTitle },
+                        { Consts.Keys.DetailsKey, Details }
+                    }, _ => { });
+                }
+            }
+        );
     }
 
     private void NavigateToView<TItem>(string view, string parameter, TItem selectedEntry,
@@ -224,7 +303,7 @@ public class ListViewModel : ViewModelBase
                 {
                     _application.Dispatcher.Invoke(() =>
                     {
-                        var item = store.FirstOrDefault(x => x.GetId() == tuple.Item.GetId());
+                        var item = store.FirstOrDefault(x => x.Id == tuple.Item.Id);
                         if (item != null)
                         {
                             var index = store.IndexOf(item);
@@ -248,7 +327,7 @@ public class ListViewModel : ViewModelBase
         if (selectedEntry != null)
         {
             using var context = _application.GetContainer().Resolve<AppDbContext>();
-            var entity = await context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == selectedEntry.GetId());
+            var entity = await context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == selectedEntry.Id);
             if (entity != null)
             {
                 context.Set<TEntity>().Remove(entity);
@@ -258,6 +337,18 @@ public class ListViewModel : ViewModelBase
                 }
             }
         }
+    }
+
+    private async Task ReloadCollectionAsync<TItem, TEntity>(AppDbContext context, ObservableCollection<TItem> storage)
+        where TItem : DbEntryModel
+        where TEntity : class, IBaseEntity<int>
+    {
+        var items = await _mapper.ListFromContextAsync<TEntity, List<TItem>>(context);
+        _application.Dispatcher.Invoke(() =>
+        {
+            storage.Clear();
+            storage.AddRange(items);
+        });
     }
 
     private static async Task<bool> OneRowAffectedAsync(AppDbContext context) =>

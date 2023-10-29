@@ -20,6 +20,6 @@ public abstract class DbEntryProfile<TModel, TEntity> : Profile
             .ConstructUsing(src => constructor.Invoke(src.Id));
 
         CreateMap<TModel, TEntity>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.GetId()));
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
     }
 }

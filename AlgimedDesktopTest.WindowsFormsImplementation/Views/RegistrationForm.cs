@@ -44,7 +44,6 @@ public partial class RegistrationForm : Form
                     LastName = lastName,
                     Login = login,
                     Password = password,
-                    CreatedAt = DateTime.Now
                 };
 
                 await context.Users.AddAsync(user);

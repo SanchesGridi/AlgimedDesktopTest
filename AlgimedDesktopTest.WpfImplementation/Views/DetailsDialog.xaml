@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AlgimedDesktopTest.WpfImplementation.Views.ExceptionDialog"
+﻿<UserControl x:Class="AlgimedDesktopTest.WpfImplementation.Views.DetailsDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +8,7 @@
              xmlns:wpf="clr-namespace:AlgimedDesktopTest.WpfImplementation.Wpf"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vm:ExceptionDialogViewModel}"
+             d:DataContext="{d:DesignInstance Type=vm:DetailsDialogViewModel}"
              d:Background="DarkGray"
              d:DesignHeight="500"
              d:DesignWidth="400">

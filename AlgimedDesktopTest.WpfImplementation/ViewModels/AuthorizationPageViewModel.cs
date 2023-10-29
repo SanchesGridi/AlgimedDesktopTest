@@ -115,6 +115,9 @@ public class AuthorizationPageViewModel : PageViewModel
                 context.Parameters.Update(pageParameter);
             }
 
+            user.LastLoginAt = DateTime.Now;
+            context.Users.Update(user);
+
             await context.SaveChangesAsync();
 
             _navigation.RegionName = RegionNames.PageRegion;

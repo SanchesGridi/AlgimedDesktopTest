@@ -34,8 +34,10 @@
                     <Button Margin="1, 5, 1, 1" Width="100" Content="Edit"
                             Command="{Binding NavigateToModeCommand}"
                             CommandParameter="{x:Static u:Consts.XamlEditKey}"/>
-                    <Button Margin="1, 5, 0, 1" Width="100" Content="Remove"
+                    <Button Margin="1, 5, 1, 1" Width="100" Content="Remove"
                             Command="{Binding RemoveModeCommand}"/>
+                    <Button Margin="1, 5, 0, 1" Width="100" Content="Load (.xlsx)"
+                            Command="{Binding LoadFromXlsxCommand}"/>
                 </StackPanel>
                 <ListView Grid.Row="1"
                           Margin="5"
@@ -95,8 +97,10 @@
                     <Button Margin="1, 5, 1, 1" Width="100" Content="Edit"
                             Command="{Binding NavigateToStepCommand}"
                             CommandParameter="{x:Static u:Consts.XamlEditKey}"/>
-                    <Button Margin="1, 5, 0, 1" Width="100" Content="Remove"
+                    <Button Margin="1, 5, 1, 1" Width="100" Content="Remove"
                             Command="{Binding RemoveStepCommand}"/>
+                    <Button Margin="1, 5, 0, 1" Width="100" Content="Load (.xlsx)"
+                            Command="{Binding LoadFromXlsxCommand}"/>
                 </StackPanel>
                 <ListView Grid.Row="1"
                           Margin="5"

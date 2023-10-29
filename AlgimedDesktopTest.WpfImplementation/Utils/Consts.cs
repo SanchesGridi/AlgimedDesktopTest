@@ -17,11 +17,13 @@ public static class Consts
         public const string UserKey = "user";
         public const string PageKey = "page";
         public const string DeviceKey = "device";
+        public const string StepsKey = "steps";
     }
 
     public static class Dialogs
     {
-        public const string ExceptionDialog = "exception_dialog";
+        public const string DetailsDialog = "details_dialog";
+        public const string WarningDialog = "warning_dialog";
     }
 
     public static class ViewNames

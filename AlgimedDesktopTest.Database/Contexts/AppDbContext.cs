@@ -28,7 +28,7 @@ public class AppDbContext : DbContext
             new StepEntity { Id = 2, ModeId = 1, Timer = 0, Destination = "Washstation", Speed = 400, Type = "EXIT", Volume = 10 }
         );
         modelBuilder.Entity<UserEntity>().HasData(
-            new UserEntity { Id = 1, FirstName = "Alex", LastName = "Grid", Login = "admin", Password = "admin1", CreatedAt = DateTime.Now }
+            new UserEntity { Id = 1, FirstName = "Alex", LastName = "Grid", Login = "admin", Password = "admin1" }
         );
         base.OnModelCreating(modelBuilder);
     }
