@@ -1,5 +1,6 @@
 ﻿using AlgimedDesktopTest.Database.Entities;
 using AlgimedDesktopTest.Database.Factories;
+using AlgimedDesktopTest.Shared.Services.Classes;
 using AlgimedDesktopTest.WindowsFormsImplementation.Utils;
 
 namespace AlgimedDesktopTest.WindowsFormsImplementation.Views;
@@ -8,6 +9,8 @@ public partial class RegistrationForm : Form
 {
     private const string PasswordExceptionMessage = "Check passwords please!";
     private const string LoginExceptionMessage = "This login is already taken!";
+
+    private readonly PasswordService _passwordService = new();
 
     public RegistrationForm() => InitializeComponent();
 
@@ -25,7 +28,7 @@ public partial class RegistrationForm : Form
             using var context = ContextFactory.Create();
 
             var uShallNotPass = string.IsNullOrWhiteSpace(password) && string.IsNullOrWhiteSpace(confirm);
-            if (password != confirm || uShallNotPass)
+            if (password != confirm || uShallNotPass || !_passwordService.Validate(password!))
             {
                 throw new InvalidOperationException(PasswordExceptionMessage);
             }
