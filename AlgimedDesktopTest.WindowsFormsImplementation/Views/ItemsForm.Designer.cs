@@ -90,6 +90,7 @@ partial class ItemsForm : Form
         // dataGrid_Modes
         // 
         dataGrid_Modes.AllowUserToAddRows = false;
+        dataGrid_Modes.AllowUserToDeleteRows = false;
         dataGrid_Modes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         dataGrid_Modes.AutoGenerateColumns = false;
         dataGrid_Modes.BackgroundColor = SystemColors.Control;
@@ -170,6 +171,7 @@ partial class ItemsForm : Form
         // dataGrid_Steps
         // 
         dataGrid_Steps.AllowUserToAddRows = false;
+        dataGrid_Steps.AllowUserToDeleteRows = false;
         dataGrid_Steps.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         dataGrid_Steps.AutoGenerateColumns = false;
         dataGrid_Steps.BackgroundColor = SystemColors.Control;
