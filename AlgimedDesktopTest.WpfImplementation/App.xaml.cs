@@ -2,6 +2,8 @@
 using AlgimedDesktopTest.Database.Factories;
 using AlgimedDesktopTest.Shared.Devices.Classes;
 using AlgimedDesktopTest.Shared.Devices.Interfaces;
+using AlgimedDesktopTest.Shared.Services.Classes;
+using AlgimedDesktopTest.Shared.Services.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
 using AlgimedDesktopTest.WpfImplementation.Services.Classes;
 using AlgimedDesktopTest.WpfImplementation.Services.Interfaces;
@@ -25,6 +27,7 @@ namespace AlgimedDesktopTest.WpfImplementation
         {
             containerRegistry
                 .RegisterSingleton<IDeviceService, DeviceService>()
+                .RegisterSingleton<IPasswordService, PasswordService>()
                 .RegisterSingleton<IPasswordBoxService, PasswordBoxService>()
                 .Register<AppDbContext>(() => ContextFactory.Create())
                 .RegisterAutoMapperInstance();

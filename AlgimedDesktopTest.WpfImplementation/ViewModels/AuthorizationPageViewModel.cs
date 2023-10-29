@@ -44,8 +44,8 @@ public class AuthorizationPageViewModel : PageViewModel
         IRegionManager regionManager,
         IEventAggregator eventAggregator,
         IDialogService dialogService,
-        IPasswordBoxService passwordBoxService,
         IDeviceService deviceService,
+        IPasswordBoxService passwordBoxService,
         IMapper mapper) : base(regionManager, eventAggregator, dialogService, deviceService)
     {
         _passwordBoxService = passwordBoxService;

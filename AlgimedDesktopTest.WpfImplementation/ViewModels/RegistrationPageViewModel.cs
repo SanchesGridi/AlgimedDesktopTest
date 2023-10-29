@@ -1,6 +1,7 @@
 ﻿using AlgimedDesktopTest.Database.Contexts;
 using AlgimedDesktopTest.Database.Entities;
 using AlgimedDesktopTest.Shared.Devices.Interfaces;
+using AlgimedDesktopTest.Shared.Services.Interfaces;
 using AlgimedDesktopTest.WpfImplementation.Events;
 using AlgimedDesktopTest.WpfImplementation.Extensions;
 using AlgimedDesktopTest.WpfImplementation.Models;
@@ -27,6 +28,7 @@ public class RegistrationPageViewModel : PageViewModel
     private const string ConfirmPasswordControlName = "cp_password_box";
     private const int NewUserId = 0;
 
+    private readonly IPasswordService _passwordService;
     private readonly IPasswordBoxService _passwordBoxService;
     private readonly IMapper _mapper;
 
@@ -49,10 +51,12 @@ public class RegistrationPageViewModel : PageViewModel
         IRegionManager regionManager,
         IEventAggregator eventAggregator,
         IDialogService dialogService,
-        IPasswordBoxService passwordBoxService,
         IDeviceService deviceService,
+        IPasswordService passwordService,
+        IPasswordBoxService passwordBoxService,
         IMapper mapper) : base(regionManager, eventAggregator, dialogService, deviceService)
     {
+        _passwordService = passwordService;
         _passwordBoxService = passwordBoxService;
         _mapper = mapper;
 
@@ -102,7 +106,7 @@ public class RegistrationPageViewModel : PageViewModel
             using var context = _application.GetContainer().Resolve<AppDbContext>();
 
             var uShallNotPass = string.IsNullOrWhiteSpace(_password) && string.IsNullOrWhiteSpace(_confirmPassword);
-            if (_password != _confirmPassword || uShallNotPass)
+            if (_password != _confirmPassword || uShallNotPass || !_passwordService.Validate(_password!))
             {
                 throw new InvalidOperationException(PasswordExceptionMessage);
             }

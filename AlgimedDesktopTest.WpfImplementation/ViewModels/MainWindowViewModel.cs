@@ -51,9 +51,6 @@ public class MainWindowViewModel : ViewModelBase
     private async void WindowLoadedCommandExecute()
     {
         // todo:
-        // excel loading
-        // wf project
-        // app installer project
         // web api project
         try
         {
