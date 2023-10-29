@@ -54,6 +54,7 @@ partial class ItemsForm : Form
         removeItemButton = new Button();
         profileLabel = new Label();
         userNameLabel = new Label();
+        loadButton = new Button();
         itemsTabControl.SuspendLayout();
         tabPageModes.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGrid_Modes).BeginInit();
@@ -73,7 +74,7 @@ partial class ItemsForm : Form
         itemsTabControl.Name = "itemsTabControl";
         itemsTabControl.SelectedIndex = 0;
         itemsTabControl.Size = new Size(940, 318);
-        itemsTabControl.TabIndex = 0;
+        itemsTabControl.TabIndex = 3;
         // 
         // tabPageModes
         // 
@@ -105,7 +106,7 @@ partial class ItemsForm : Form
         dataGrid_Modes.RowTemplate.Height = 29;
         dataGrid_Modes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dataGrid_Modes.Size = new Size(928, 289);
-        dataGrid_Modes.TabIndex = 0;
+        dataGrid_Modes.TabIndex = 4;
         dataGrid_Modes.Tag = "Modes";
         dataGrid_Modes.RowHeaderMouseDoubleClick += UpdateRow;
         // 
@@ -186,7 +187,7 @@ partial class ItemsForm : Form
         dataGrid_Steps.RowTemplate.Height = 29;
         dataGrid_Steps.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         dataGrid_Steps.Size = new Size(925, 289);
-        dataGrid_Steps.TabIndex = 0;
+        dataGrid_Steps.TabIndex = 5;
         dataGrid_Steps.Tag = "Steps";
         dataGrid_Steps.RowHeaderMouseDoubleClick += UpdateRow;
         // 
@@ -275,22 +276,22 @@ partial class ItemsForm : Form
         // 
         // addItemButton
         // 
-        addItemButton.Location = new Point(432, 59);
+        addItemButton.Location = new Point(468, 59);
         addItemButton.Margin = new Padding(3, 2, 3, 2);
         addItemButton.Name = "addItemButton";
         addItemButton.Size = new Size(153, 22);
-        addItemButton.TabIndex = 2;
+        addItemButton.TabIndex = 0;
         addItemButton.Text = "Add";
         addItemButton.UseVisualStyleBackColor = true;
         addItemButton.Click += AddRow;
         // 
         // removeItemButton
         // 
-        removeItemButton.Location = new Point(591, 59);
+        removeItemButton.Location = new Point(627, 59);
         removeItemButton.Margin = new Padding(3, 2, 3, 2);
         removeItemButton.Name = "removeItemButton";
         removeItemButton.Size = new Size(153, 22);
-        removeItemButton.TabIndex = 3;
+        removeItemButton.TabIndex = 1;
         removeItemButton.Text = "Remove";
         removeItemButton.UseVisualStyleBackColor = true;
         removeItemButton.Click += RemoveRow;
@@ -317,11 +318,23 @@ partial class ItemsForm : Form
         userNameLabel.Size = new Size(0, 19);
         userNameLabel.TabIndex = 5;
         // 
+        // loadButton
+        // 
+        loadButton.Location = new Point(786, 59);
+        loadButton.Margin = new Padding(3, 2, 3, 2);
+        loadButton.Name = "loadButton";
+        loadButton.Size = new Size(153, 22);
+        loadButton.TabIndex = 2;
+        loadButton.Text = "Load";
+        loadButton.UseVisualStyleBackColor = true;
+        loadButton.Click += LoadFromXlsx;
+        // 
         // ItemsForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(947, 409);
+        Controls.Add(loadButton);
         Controls.Add(userNameLabel);
         Controls.Add(profileLabel);
         Controls.Add(removeItemButton);
@@ -379,4 +392,5 @@ partial class ItemsForm : Form
     private Button removeItemButton;
     private Label profileLabel;
     private Label userNameLabel;
+    private Button loadButton;
 }

@@ -177,6 +177,18 @@ public partial class ItemsForm : Form
         }
     }
 
+    private async void LoadFromXlsx(object sender, EventArgs e)
+    {
+        try
+        {
+            await Task.CompletedTask;
+        }
+        catch (Exception ex)
+        {
+            Dialogs.ShowExceptionDialog(ex);
+        }
+    }
+
     private void OnFormClosed(object sender, FormClosedEventArgs e) =>
         Owner?.Dispose();
     #endregion

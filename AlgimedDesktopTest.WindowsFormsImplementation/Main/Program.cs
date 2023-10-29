@@ -8,6 +8,7 @@ public static class Program
     public static void Main()
     {
         ApplicationConfiguration.Initialize();
-        Application.Run(new AuthorizationForm());
+        Application.Run(new ItemsForm(new() { FirstName = "Alexander", LastName = "Gridin", Login = "AlexGrid" }));
+        // Application.Run(new AuthorizationForm());
     }
 }
