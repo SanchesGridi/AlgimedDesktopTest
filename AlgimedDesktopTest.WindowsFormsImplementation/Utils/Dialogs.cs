@@ -8,4 +8,9 @@ public static class Dialogs
     {
         MessageBox.Show(ex.Message, ErrorTitle, MessageBoxButtons.OK);
     }
+
+    public static void ShowDialog(string message, string title)
+    {
+        MessageBox.Show(message, title, MessageBoxButtons.OK);
+    }
 }

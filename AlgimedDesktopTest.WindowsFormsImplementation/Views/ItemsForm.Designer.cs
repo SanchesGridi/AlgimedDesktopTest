@@ -54,7 +54,7 @@ partial class ItemsForm : Form
         removeItemButton = new Button();
         profileLabel = new Label();
         userNameLabel = new Label();
-        loadButton = new Button();
+        loadXlsxButton = new Button();
         itemsTabControl.SuspendLayout();
         tabPageModes.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGrid_Modes).BeginInit();
@@ -318,23 +318,23 @@ partial class ItemsForm : Form
         userNameLabel.Size = new Size(0, 19);
         userNameLabel.TabIndex = 5;
         // 
-        // loadButton
+        // loadXlsxButton
         // 
-        loadButton.Location = new Point(786, 59);
-        loadButton.Margin = new Padding(3, 2, 3, 2);
-        loadButton.Name = "loadButton";
-        loadButton.Size = new Size(153, 22);
-        loadButton.TabIndex = 2;
-        loadButton.Text = "Load";
-        loadButton.UseVisualStyleBackColor = true;
-        loadButton.Click += LoadFromXlsx;
+        loadXlsxButton.Location = new Point(786, 59);
+        loadXlsxButton.Margin = new Padding(3, 2, 3, 2);
+        loadXlsxButton.Name = "loadXlsxButton";
+        loadXlsxButton.Size = new Size(153, 22);
+        loadXlsxButton.TabIndex = 2;
+        loadXlsxButton.Text = "Load (.xlsx)";
+        loadXlsxButton.UseVisualStyleBackColor = true;
+        loadXlsxButton.Click += LoadFromXlsx;
         // 
         // ItemsForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(947, 409);
-        Controls.Add(loadButton);
+        Controls.Add(loadXlsxButton);
         Controls.Add(userNameLabel);
         Controls.Add(profileLabel);
         Controls.Add(removeItemButton);
@@ -392,5 +392,5 @@ partial class ItemsForm : Form
     private Button removeItemButton;
     private Label profileLabel;
     private Label userNameLabel;
-    private Button loadButton;
+    private Button loadXlsxButton;
 }
